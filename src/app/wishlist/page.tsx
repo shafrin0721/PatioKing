@@ -1,0 +1,3 @@
+import Link from "next/link";
+import { PageFrame, productImages } from "@/components/PatioShell";
+export default function WishlistPage() { return <PageFrame><section className="wishlist-page"><h1>My Wishlist</h1><div className="wishlist-table"><div className="wishlist-head">PRODUCT <span>PRICE</span><span>STOCK STATUS</span></div>{["Chair", "Sofa", "Coffee Table"].map((name, index) => <div className="wishlist-row" key={name}><img src={productImages[index]} alt="" /><b>{name}</b><span>Rs.{[12500,85000,100000][index].toLocaleString()}</span><span className={index === 2 ? "out" : "in"}>{index === 2 ? "Out of Stock" : "In Stock"}</span><Link href="/cart">Add to Cart</Link><button>×</button></div>)}</div></section></PageFrame>; }

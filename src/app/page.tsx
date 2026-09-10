@@ -1,69 +1,56 @@
-import Image from "next/image";
+"use client";
+
+import { useRef, useState } from "react";
+import { furnitureCategories } from "@/components/PatioShell";
+
+type Product = { name: string; category: string; price: number; image: string };
+const images = [
+  "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=700&q=85",
+  "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=85",
+  "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=700&q=85",
+  "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=700&q=85",
+  "https://images.unsplash.com/photo-1532372320572-cda25653a26d?auto=format&fit=crop&w=700&q=85",
+  "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=700&q=85",
+  "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=700&q=85",
+  "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=85",
+];
+const products: Product[] = Array.from({ length: 24 }, (_, index) => ({ name: ["Walnut Classic Lounge Chair", "Teak Bar Stool", "Classic Bedside Cupboard", "Modern Round Sofa", "Walnut Coffee Table", "Teak Dining Table"][index % 6], category: furnitureCategories[index % furnitureCategories.length], price: 12500 + index * 7500, image: images[index % images.length] }));
+const money = (value: number) => `Rs.${value.toLocaleString()}`;
 
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+  const [category, setCategory] = useState("All");
+  const [selected, setSelected] = useState<Product | null>(null);
+  const [cart, setCart] = useState<Product[]>([]);
+  const [showCart, setShowCart] = useState(false);
+  const [sortBy, setSortBy] = useState("featured");
+  const [priceLimit, setPriceLimit] = useState("all");
+  const [search, setSearch] = useState("");
+  const categoryRail = useRef<HTMLDivElement>(null);
+  const filtered = products.filter((product) => {
+    const matchesCategory = category === "All" || product.category === category;
+    const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase()) || product.category.toLowerCase().includes(search.toLowerCase());
+    const matchesPrice = priceLimit === "all" || product.price <= Number(priceLimit);
+    return matchesCategory && matchesSearch && matchesPrice;
+  }).sort((first, second) => {
+    if (sortBy === "az") return first.name.localeCompare(second.name);
+    if (sortBy === "za") return second.name.localeCompare(first.name);
+    if (sortBy === "low") return first.price - second.price;
+    if (sortBy === "high") return second.price - first.price;
+    return 0;
+  });
+  const addToCart = (product: Product) => { setCart((items) => [...items, product]); setSelected(null); setShowCart(true); };
+  const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+
+  return <main className="reference-site">
+    <header className="reference-header"><a className="brand-mark" href="#top"><strong>PK</strong><small>PATIO KING</small></a><nav><a href="#top">Home</a><a href="/products">Products</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/contact">Contact</a></nav><div className="head-icons"><button aria-label="Account">●</button><button aria-label="Wishlist">♡</button><button className="cart-count" onClick={() => setShowCart(true)}>Bag ({cart.length})</button></div></header>
+    <section className="reference-hero" id="top"><div><p>DESIGNED FOR EVERY SPACE</p><h1>Furniture Made for<br /><em>Your Space</em></h1><span>Discover beautifully crafted furniture designed to bring warmth, character and effortless style into your home.</span><div><a className="gold-button" href="#shop">Explore Collection</a><a className="ghost-button" href="#custom">Discover Our Story</a></div></div></section>
+    <section className="category-rail"><button className="category-arrow" aria-label="Previous categories" onClick={() => categoryRail.current?.scrollBy({ left: -430, behavior: "smooth" })}>‹</button><div className="category-rail-track" ref={categoryRail}>{furnitureCategories.map((item, index) => <button className={`category-bubble ${category === item ? "active" : ""}`} key={item} onClick={() => setCategory(item)}><span><img src={images[(index + 2) % images.length]} alt="" /></span>{item}</button>)}</div><button className="category-arrow" aria-label="Next categories" onClick={() => categoryRail.current?.scrollBy({ left: 430, behavior: "smooth" })}>›</button></section>
+    <section className="catalog" id="shop"><div className="catalog-heading"><div><small>OUR COLLECTION</small><h2>Furniture Made for Modern Living</h2><p>Explore our collection of thoughtfully designed furniture, combining contemporary aesthetics, comfort and lasting craftsmanship.</p></div></div><div className="store-filters"><label>Search<input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search products..." /></label><label>Sort by<select value={sortBy} onChange={(event) => setSortBy(event.target.value)}><option value="featured">Featured</option><option value="az">Name: A–Z</option><option value="za">Name: Z–A</option><option value="low">Price: Low to high</option><option value="high">Price: High to low</option></select></label><label>Price<select value={priceLimit} onChange={(event) => setPriceLimit(event.target.value)}><option value="all">All prices</option><option value="20000">Under Rs.20,000</option><option value="50000">Under Rs.50,000</option><option value="100000">Under Rs.100,000</option></select></label><button className="clear-filters" onClick={() => { setSearch(""); setSortBy("featured"); setPriceLimit("all"); setCategory("All"); }}>Clear filters</button></div><div className="catalog-count">Showing {filtered.length} pieces</div><div className="product-grid reference-grid">{filtered.map((product, index) => <article className="reference-product" key={`${product.name}-${index}`} onClick={() => { window.location.href = `/products/${index + 1}`; }}><div><img src={product.image} alt={product.name} /></div><h3>{product.name}</h3><span>{product.category}</span><strong>{money(product.price)}</strong></article>)}</div></section>
+    <section className="catalog legacy-catalog" id="legacy-shop"><div className="catalog-heading"><div><small>OUR COLLECTION</small><h2>Furniture Made for Modern Living</h2><p>Explore our collection of thoughtfully designed furniture, combining contemporary aesthetics, comfort and lasting craftsmanship.</p></div><div className="catalog-tools"><div className="catalog-cats">{["All", "Residential", "Dining", "Living", "Bedroom", "Commercial", "Custom"].map((item) => <button className={category === item ? "active" : ""} key={item} onClick={() => setCategory(item)}>{item}</button>)}</div><input aria-label="Search products" placeholder="Search Products..." /></div></div><div className="product-grid reference-grid">{filtered.map((product, index) => <article className="reference-product" key={`${product.name}-${index}`} onClick={() => setSelected(product)}><div><img src={product.image} alt={product.name} /></div><h3>{product.name}</h3><span>{product.category}</span></article>)}</div></section>
+    <section className="story-strip" id="about"><img src="https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&w=900&q=85" alt="Furniture maker working in a studio" /><div><small>OUR CRAFT</small><h2>Designed to Live<br /><em>With</em></h2><p>Timeless pieces made with carefully selected materials and thoughtful craftsmanship. Every item in our collection is built to age beautifully and live for generations.</p><a className="dark-button" href="#contact">View Our Craft</a></div></section>
+    <section className="project-banner" id="projects"><div><small>OUR PROJECTS</small><h2>Transform Your Home<br />with Furniture</h2><a className="light-button" href="#contact">Contact Us</a></div></section>
+    <footer className="reference-footer" id="contact"><div className="footer-top"><div><div className="footer-brand">P a t i o  K i n g</div><p>“We Shape Your Home.” Modern furniture<br />solutions for the discerning lifestyle.</p><div className="socials">◎　f　℘</div></div><div><small>Navigation</small><p>Collection<br />Spaces<br />About<br />Process<br />Projects</p></div><div><small>Contact</small><p>• patiokinginfo@gmail.com<br />• +94 77 342 4994<br />• Sri Lanka</p></div><div><small>Service</small><p>• Bespoke Design<br />• Site Consultation<br />• After-Sales<br />• Sustainability</p></div></div><div className="footer-statement">PATIO KING <i>•</i><br />WE SHAPE<br />YOUR HOME <i>•</i><small>© 2024 Patio King. All Rights Reserved.</small></div></footer>
+    {selected && <div className="reference-overlay" onClick={() => setSelected(null)}><section className="detail-sheet" onClick={(event) => event.stopPropagation()}><button className="detail-close" onClick={() => setSelected(null)}>×</button><a className="back-link" onClick={() => setSelected(null)}>← Back to Products</a><div className="detail-main"><div className="detail-gallery"><div className="thumbs">{images.slice(0, 4).map((image) => <img key={image} src={image} alt="" />)}</div><img className="detail-image" src={selected.image} alt={selected.name} /></div><div className="detail-copy"><h1>{selected.name} <span>In Stock</span></h1><div className="rating">★★★★★ <small>4 Review　·　SKU: 2,51,594</small></div><div className="detail-price"><s>Rs.12,500.00</s> <b>{money(10875)}</b> <em>13% off</em></div><p>A beautifully crafted wooden chair featuring a curved walnut frame and cushioned seat, designed to bring warmth, comfort, and timeless elegance to modern interiors.</p><div className="quantity">−　1　+</div><div className="detail-actions"><button onClick={() => addToCart(selected)}>Add Cart</button><button className="buy" onClick={() => addToCart(selected)}>Buy Now</button></div><small>Category: Chairs</small><small>Tag: Wooden Chair, Lounge Chair, Walnut Furniture, Dining Chair,<br />Modern Furniture, Indoor Furniture, Premium Chair, Home Furniture</small></div></div><div className="detail-tabs"><button className="active">Descriptions</button><button>Additional Information</button><button>Customer Feedback</button></div><div className="detail-description"><p>The Walnut Classic Lounge Chair combines elegant craftsmanship with everyday comfort. Its smooth curved wooden frame creates a refined silhouette, while the upholstered cushioned seat provides comfortable support for extended sitting.</p><h2>Related Products</h2><div className="related-grid">{products.slice(0, 4).map((product, index) => <article key={index}><img src={product.image} alt="" /><p>{product.name}</p></article>)}</div></div></section></div>}
+    {showCart && <div className="reference-overlay" onClick={() => setShowCart(false)}><aside className="reference-cart" onClick={(event) => event.stopPropagation()}><button className="detail-close" onClick={() => setShowCart(false)}>×</button><h2>Shopping Cart ({cart.length})</h2>{cart.map((item, index) => <div className="reference-cart-item" key={`${item.name}-${index}`}><img src={item.image} alt="" /><span>{item.name}<br /><b>1 × {money(item.price)}</b></span></div>)}<div className="cart-bottom"><span>Total: <b>{money(subtotal)}</b></span><button className="buy" onClick={() => setShowCart(false)}>Checkout</button></div></aside></div>}
+  </main>;
 }

@@ -1,0 +1,3 @@
+import Link from "next/link";
+import { PageFrame, productImages } from "@/components/PatioShell";
+export default function CartPage() { return <PageFrame><section className="cart-page"><p>(1 item)</p><div className="cart-table"><div className="cart-table-head"><span>Items</span><span>Price</span><span>Quantity</span><span>Total</span><span>Remove</span></div><div className="cart-table-row"><img src={productImages[0]} alt="" /><b>Customized<br />Furniture</b><strong>Rs.12,500</strong><span>01</span><strong>Rs.12,500</strong><button>♧</button></div></div><div className="cart-page-total">Total: Rs.12,500 <Link href="/checkout">Pay Now</Link></div></section></PageFrame>; }
