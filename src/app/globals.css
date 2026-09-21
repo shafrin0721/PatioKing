@@ -4,6 +4,9 @@
 @import "./commerce-polish.css";
 @import "./success-polish.css";
 @import "./customizer-polish.css";
+@import "./home-polish.css";
+@import "./navigation-polish.css";
+@import "./viewer-polish.css";
 @import "./appointment-polish.css";
 :root { --ink:#27221e; --paper:#f4f0e9; --clay:#9b442c; --line:#d9d0c3; --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',sans-serif; --mono:'DM Mono',monospace; }
 * { box-sizing:border-box; } html { scroll-behavior:smooth; } body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); } button,input { font:inherit; } button { cursor:pointer; } a { color:inherit; text-decoration:none; }
