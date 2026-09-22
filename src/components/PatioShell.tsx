@@ -3,66 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export const productImages = [
-  "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=700&q=85",
-  "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=85",
-  "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=700&q=85",
-  "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=700&q=85",
-];
-
-export const productGalleries = [
-  [
-    "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=900&q=85",
-    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=85",
-    "https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&w=900&q=85",
-    "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=85",
-  ],
-  [
-    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=85",
-    "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=900&q=85",
-    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=85",
-    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=85",
-  ],
-  [
-    "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=900&q=85",
-    "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=85",
-    "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=900&q=85",
-    "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=85",
-  ],
-];
-
-export const productNames = [
-  "Walnut Classic Lounge Chair",
-  "Teak Frame Lounge Chair",
-  "Natural Rattan Accent Chair",
-  "Contemporary Upholstered Lounge Chair",
-  "Walnut Round Coffee Table",
-  "Teak Outdoor Dining Table",
-  "Modern Low Console Table",
-  "Classic Side Table",
-];
-
-export const furnitureCategories = [
-  "Bar stools",
-  "Bedside cupboards",
-  "Beds",
-  "Chairs",
-  "Coffee tables",
-  "Corner Sofa",
-  "Cupboards",
-  "Dining Tables",
-  "Divan sofa",
-  "Dressing tables",
-  "Pouf/Ottoman",
-  "Relaxing chairs",
-  "Rocking chairs",
-  "Round Sofa",
-  "Single Chairs",
-  "Sofa",
-  "Dining chairs",
-  "TV console",
-];
-
 export function PatioHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { React360Viewer } from "@paulin_bixlers/react-360-product-viewer";
 import { StyleSheetManager } from "styled-components";
 import { getFurniture360Asset } from "./furniture360Assets";
@@ -16,14 +17,17 @@ type Product360ViewerProps = {
   width?: number;
   length?: number;
   height?: number;
+  productImage?: string;
 };
 
-export function Product360Viewer({ furnitureType, material, finish, upholstery = "Linen", color, width = 72, length = 78, height = 86 }: Product360ViewerProps) {
+export function Product360Viewer({ furnitureType, material, finish, upholstery = "Linen", color, width = 72, length = 78, height = 86, productImage }: Product360ViewerProps) {
+  const searchParams = useSearchParams();
+  const selectedImage = productImage ?? searchParams.get("image") ?? undefined;
   const [imageFallback, setImageFallback] = useState(false);
   const model = getFurnitureModel(furnitureType);
 
   if (!imageFallback) {
-    return <div className="product-360-stage"><Furniture3DViewer furnitureType={furnitureType} material={material} finish={finish} upholstery={upholstery} color={color} width={width} length={length} height={height} /><button className="viewer-fallback-toggle" type="button" onClick={() => setImageFallback(true)}>Use image fallback</button>{model.kind !== "gltf" && <span className="viewer-model-note">No GLB/GLTF supplied yet - using a real-time studio model slot.</span>}</div>;
+    return <div className="product-360-stage">{selectedImage ? <img className="product-selected-preview" src={selectedImage} alt={`${furnitureType} selected product preview`} loading="eager" /> : <Furniture3DViewer furnitureType={furnitureType} material={material} finish={finish} upholstery={upholstery} color={color} width={width} length={length} height={height} />}<div className="product-preview-actions">{selectedImage && <a className="viewer-fallback-toggle" href={selectedImage} download>Download preview image</a>}<button className="viewer-fallback-toggle" type="button" onClick={() => setImageFallback(true)}>Use image fallback</button></div>{model.kind !== "gltf" && <span className="viewer-model-note">Selected product preview</span>}</div>;
   }
 
   return <Image360Fallback furnitureType={furnitureType} material={material} finish={finish} color={color} onBack={() => setImageFallback(false)} />;
