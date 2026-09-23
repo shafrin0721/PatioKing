@@ -52,18 +52,7 @@ export function Product360Viewer({
           </div>
         )}
 
-        <div className="product-interactive-preview">
-          <Furniture3DViewer
-            furnitureType={furnitureType}
-            material={material}
-            finish={finish}
-            upholstery={upholstery}
-            color={color}
-            width={width}
-            length={length}
-            height={height}
-          />
-        </div>
+        {!selectedImage && <div className="product-interactive-preview"><Furniture3DViewer furnitureType={furnitureType} material={material} finish={finish} upholstery={upholstery} color={color} width={width} length={length} height={height} /></div>}
       </div>
 
       <div className="product-preview-actions">

@@ -49,6 +49,7 @@
 .customizer-page .customizer-preview .configuration-summary .summary-price { border-top:1px solid #c9954f; }
 .customizer-page .customizer-preview .configuration-summary .summary-price span { color:#e2b875; }
 .customizer-page .customizer-preview .configuration-summary .summary-price b { color:#ffd28a; font-size:27px; font-weight:600; }
+.catalog-inquiry-link { display:block; margin:14px 16px 0; padding:11px 12px; background:#18242b; color:#f1d09a; font:10px var(--mono); letter-spacing:.06em; text-align:center; text-transform:uppercase; }
 
 @media (max-width: 900px) {
 	.customizer-layout { grid-template-columns:1fr; padding:0 24px; }

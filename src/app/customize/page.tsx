@@ -5,7 +5,7 @@ import { canonicalCategoryId, getCatalog, getCatalogCategories, getProduct } fro
 
 export default async function CustomizePage({ searchParams }: { searchParams: Promise<{ category?: string; productId?: string }> }) {
   const { category, productId } = await searchParams;
-  const categories = getCatalogCategories();
+  const categories = getCatalogCategories(Boolean(category));
   const canonicalCategory = category ? canonicalCategoryId(category) : undefined;
   const products = productId ? (getProduct(productId) ? [getProduct(productId)!] : []) : canonicalCategory ? getCatalog(canonicalCategory) : [];
   const selectedProduct = productId ? getProduct(productId) : undefined;

@@ -1,4 +1,0 @@
-import Link from "next/link";
-import { PageFrame } from "@/components/PatioShell";
-import { getCatalog } from "@/app/products/[id]/page";
-export default function CartPage() { const product = getCatalog()[0]; return <PageFrame><section className="cart-page"><p>(1 item)</p><div className="cart-table"><div className="cart-table-head"><span>Items</span><span>Price</span><span>Quantity</span><span>Total</span><span>Remove</span></div>{product && <div className="cart-table-row"><img src={product.image} alt="" /><b>{product.name}</b><strong>Rs.{product.price.toLocaleString()}</strong><span>01</span><strong>Rs.{product.price.toLocaleString()}</strong><button>♧</button></div>}</div><div className="cart-page-total">Total: {product ? `Rs.${product.price.toLocaleString()}` : "Rs.0"} <Link href="/checkout">Pay Now</Link></div></section></PageFrame>; }
