@@ -126,12 +126,18 @@
   flex: 0 0 27px;
   width: 27px;
   height: 27px;
+  min-width: 27px;
+  max-width: 27px;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  padding: 0;
+  display: grid;
+  place-items: center;
   border: 0;
   border-radius: 50%;
   background: #10181d;
   color: #fff;
-  font-size: 21px;
-  line-height: 20px;
+  font: 16px/1 var(--sans);
   cursor: pointer;
 }
 
@@ -510,3 +516,370 @@
 }
 
 @media (max-width:700px) { .about-introduction,.contact-introduction,.about-values { grid-template-columns:1fr; gap:38px; padding:60px 22px; }.about-image-stack { min-height:390px; }.about-image-stack img:first-child { height:330px; }.about-image-stack img:last-child { height:170px; }.section-label { display:block; }.section-label h2 { margin-top:14px; font-size:34px; }.principles-grid { grid-template-columns:1fr; }.principles-grid article { min-height:0; }.values-list p { grid-template-columns:38px 90px 1fr; }.contact-introduction form { padding:22px; }.form-row { grid-template-columns:1fr; }.contact-details { grid-template-columns:1fr; }.contact-details div { border-right:0; border-bottom:1px solid #e7ded4; padding:28px 22px; }.contact-details div:last-child { border-bottom:0; }.contact-showroom { min-height:320px; padding:55px 25px; }.contact-showroom h2 { font-size:42px; } }
+
+.inner-hero {
+  margin-top: 0;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-link span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.category-rail > .category-arrow:first-child,
+.category-rail > .category-arrow:last-child {
+  width: 32px;
+  min-width: 32px;
+  max-width: 32px;
+  height: 32px;
+  flex-basis: 32px;
+}
+
+.brand-mark {
+  display: block;
+  width: 58px;
+  height: 58px;
+  padding: 2px;
+  background: #fff;
+  border: 1px solid #d8d0c6;
+  box-shadow: 0 2px 8px #00000012;
+}
+
+.brand-mark img,
+.footer-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.footer-logo {
+  width: 150px;
+  height: 58px;
+  margin-bottom: 25px;
+  object-position: left center;
+}
+
+.category-rail > .category-arrow:focus-visible {
+  outline: 2px solid #b28a51;
+  outline-offset: 3px;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.socials a {
+  display: grid;
+  place-items: center;
+  min-width: 27px;
+  height: 27px;
+  padding: 0 5px;
+  border: 1px solid #756c62;
+  border-radius: 50%;
+  color: #eee5da;
+  font: 9px var(--mono);
+  text-transform: uppercase;
+  transition: color .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.socials a:hover {
+  border-color: #d2ac6e;
+  color: #d2ac6e;
+  transform: translateY(-2px);
+}
+
+.socials a svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.socials a svg rect,
+.socials a svg circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
+.socials a svg .social-icon-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+.dark-button,
+.home-button,
+.account-actions a,
+.catalog-inquiry-link {
+  align-items: center;
+  gap: 14px;
+  line-height: 1.2;
+}
+
+.dark-button span,
+.home-button span,
+.account-actions a span,
+.catalog-inquiry-link span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  overflow: hidden;
+  font-size: 0;
+  line-height: 1;
+}
+
+.reference-footer {
+  font-family: var(--sans);
+  padding-top: 88px;
+}
+
+.reference-footer .footer-top {
+  align-items: start;
+}
+
+.reference-footer .footer-top > div:first-child p {
+  max-width: 250px;
+  color: #c5bbb0;
+  font-size: 0;
+  line-height: 1.8;
+  letter-spacing: .01em;
+}
+
+.reference-footer .footer-top > div:first-child p::before {
+  content: "Inspired living in the style.";
+  display: block;
+  font-size: 12px;
+}
+
+.reference-footer .footer-top > div:first-child p::after {
+  content: "Modern furniture solutions for the discerning lifestyle.";
+  display: block;
+  font-size: 12px;
+}
+
+.reference-footer .footer-top > div:not(:first-child) small {
+  display: block;
+  margin-bottom: 17px;
+  color: #c9a66d;
+  font-size: 10px;
+  letter-spacing: .2em;
+}
+
+.reference-footer .footer-top > div:not(:first-child) p {
+  color: #b0aaa3;
+  font-size: 11px;
+  line-height: 2.1;
+}
+
+.reference-footer .footer-statement {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: .02em;
+  padding-bottom: 105px;
+}
+
+.reference-footer .footer-statement {
+  font-size: 0;
+}
+
+.reference-footer .footer-statement::before {
+  content: "PATIO KING •";
+  display: block;
+  font-size: clamp(55px, 9vw, 145px);
+  line-height: 1.08;
+}
+
+.reference-footer .footer-statement::after {
+  content: "Inspired living in the style.";
+  display: block;
+  font-size: clamp(34px, 5vw, 84px);
+  line-height: 1.08;
+}
+
+.product-share {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 4px 0 22px;
+}
+
+.product-share > span {
+  color: #756b61;
+  font: 10px var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.product-share-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.product-share-actions a,
+.product-share-actions button {
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 31px;
+  padding: 0;
+  border: 1px solid #d8cec1;
+  border-radius: 50%;
+  background: #fff;
+  color: #332a23;
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.product-share-actions a:hover,
+.product-share-actions button:hover {
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.product-share-actions svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.product-share-actions svg rect,
+.product-share-actions svg circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.product-share-actions svg .share-icon-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+.product-share-actions .share-facebook:hover { background: #1877f2; border-color: #1877f2; }
+.product-share-actions .share-instagram:hover { background: #d62976; border-color: #d62976; }
+.product-share-actions .share-telegram:hover { background: #229ed9; border-color: #229ed9; }
+.product-share-actions .share-whatsapp:hover { background: #25d366; border-color: #25d366; }
+.product-share-actions .share-copy:hover { background: #332a23; border-color: #332a23; }
+
+.product-share > small {
+  flex-basis: 100%;
+  color: #8b5d2d;
+  font-size: 11px;
+}
+
+.confirmation-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #17130fb8;
+  backdrop-filter: blur(7px);
+}
+
+.confirmation-dialog {
+  position: relative;
+  width: min(510px, 100%);
+  padding: 42px;
+  background: #f8f5ef;
+  color: #211d18;
+  box-shadow: 0 24px 70px #00000035;
+}
+
+.confirmation-close {
+  position: absolute;
+  top: 15px;
+  right: 17px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #d8cec1;
+  border-radius: 50%;
+  background: transparent;
+  color: #756b61;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.confirmation-kicker {
+  color: #a2783e;
+  font: 9px var(--mono);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.confirmation-dialog h2 {
+  max-width: 380px;
+  margin: 14px 0 12px;
+  font: 400 36px/.98 var(--serif);
+}
+
+.confirmation-dialog p {
+  max-width: 390px;
+  margin: 0;
+  color: #756b61;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.confirmation-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.confirmation-actions button {
+  min-height: 44px;
+  border: 1px solid #211d18;
+  padding: 0 16px;
+  font: 10px var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.confirmation-cancel {
+  background: transparent;
+  color: #211d18;
+}
+
+.confirmation-confirm {
+  flex: 1;
+  background: #211d18;
+  color: #fff;
+}
+
+.confirmation-confirm span {
+  display: inline-block;
+  margin-left: 10px;
+  transition: transform .2s ease;
+}
+
+.confirmation-confirm:hover span {
+  transform: translateX(3px);
+}
+
+@media (max-width:700px) {
+  .inner-hero { margin-top: 0; }
+  .brand-mark { width: 92px; height: 43px; padding: 2px; }
+  .reference-footer .footer-top > div:first-child p { font-size: 10px; }
+  .reference-footer { padding-top: 62px; }
+  .reference-footer .footer-statement { padding-bottom: 82px; }
+  .confirmation-dialog { padding: 35px 22px 25px; }
+  .confirmation-dialog h2 { font-size: 31px; }
+  .confirmation-actions { align-items: stretch; flex-direction: column-reverse; }
+  .confirmation-confirm { flex: none; min-height: 48px; }
+}
