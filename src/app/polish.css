@@ -883,3 +883,12 @@
   .confirmation-actions { align-items: stretch; flex-direction: column-reverse; }
   .confirmation-confirm { flex: none; min-height: 48px; }
 }
+
+/* Keep furniture fully visible in product surfaces; zoom is the intentional crop. */
+.reference-product > div { display:grid; place-items:center; background:#f4f1eb; }
+.reference-product img { object-fit:contain; padding:18px; }
+.product-detail-page .detail-image { width:100%; height:100%; min-height:420px; object-fit:contain; padding:24px; }
+.product-detail-page .detail-gallery { min-height:620px; }
+.product-detail-page .detail-image-wrap { min-height:560px; display:grid; place-items:center; }
+.product-detail-page .detail-image { max-width:100%; max-height:100%; }
+@media (max-width:700px) { .product-detail-page .detail-gallery { min-height:390px; } .product-detail-page .detail-image-wrap { min-height:330px; } .product-detail-page .detail-image { min-height:330px; padding:14px; } }

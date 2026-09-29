@@ -92,6 +92,10 @@
 	.customizer-choice span { padding:10px; font-size:9px; }
 	.summary-price b { font-size:22px !important; }
 }
+
+.customizer-choice img { object-fit:contain; padding:10px; }
+.customizer-preview .preview-kicker span:last-child { font-size:0; }
+.customizer-preview .preview-kicker span:last-child::after { content:"REAL-TIME 3D MODEL"; font-size:9px; }
 .customizer-intro { max-width:1240px; margin:auto; padding:92px 32px 54px; }
 .customizer-intro small,.customizer-block > small,.selection-summary > small,.configuration-summary > div > small,.quote-review > small,.quote-success > small { color:#a2783e; font:9px var(--mono); letter-spacing:.18em; text-transform:uppercase; }
 .customizer-intro h1 { margin:18px 0 22px; color:#211d18; font:400 clamp(52px,7vw,94px)/.9 var(--serif); letter-spacing:-.05em; }

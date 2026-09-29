@@ -5,9 +5,12 @@ import { canonicalCategoryId, getCatalog, getCatalogCategories, getProduct } fro
 
 export default async function CustomizePage({ searchParams }: { searchParams: Promise<{ category?: string; productId?: string }> }) {
   const { category, productId } = await searchParams;
-  const categories = getCatalogCategories(true);
-  const canonicalCategory = category ? canonicalCategoryId(category) : undefined;
-  const products = productId ? (getProduct(productId) ? [getProduct(productId)!] : []) : canonicalCategory ? getCatalog(canonicalCategory) : [];
+  const catalogCategories = getCatalogCategories(true);
+  const wardrobeImage = catalogCategories.find((item) => item.id === "cupboard")?.image ?? catalogCategories[0]?.image ?? "";
+  const categories = [...catalogCategories, { id: "wardrobe", name: "Wardrobe", category: "Wardrobe", image: wardrobeImage }];
+  const canonicalCategory = category === "wardrobe" ? "wardrobe" : category ? canonicalCategoryId(category) : undefined;
+  const wardrobe = getProduct("wardrobe");
+  const products = productId ? (getProduct(productId) ? [getProduct(productId)!] : []) : canonicalCategory === "wardrobe" && wardrobe ? [wardrobe] : canonicalCategory ? getCatalog(canonicalCategory) : [];
   const selectedProduct = productId ? getProduct(productId) : undefined;
 
   if (productId && !selectedProduct) {

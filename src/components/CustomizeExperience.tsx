@@ -14,15 +14,15 @@ const materials = ["Premium Wood", "Natural Rattan", "Premium Upholstery", "Teak
 const finishes = ["Natural", "Honey Oak", "Dark Walnut", "Matte Black", "Whitewash"];
 const upholstery = ["Linen", "Cotton Blend", "Performance Velvet", "Outdoor Canvas", "Leather"];
 const colors = ["Warm Neutral", "Forest Green", "Terracotta", "Charcoal", "Natural Wood"];
-const profiles = { chair: [72, 78, 86], sofa: [220, 95, 82], table: [160, 90, 75], cabinet: [100, 50, 85], default: [120, 80, 80] } as const;
+const profiles = { chair: [72, 78, 86], sofa: [220, 95, 82], table: [160, 90, 75], cabinet: [100, 50, 85], wardrobe: [240, 58, 220], default: [120, 80, 80] } as const;
 const baseAdjustments = { "Premium Wood": 0, "Natural Rattan": 4500, "Premium Upholstery": 8500, Teak: 12000, Walnut: 18000, "Weather-resistant Aluminium": 9500 };
 const finishAdjustments = { Natural: 0, "Honey Oak": 2500, "Dark Walnut": 4500, "Matte Black": 1800, Whitewash: 2200 };
 const upholsteryAdjustments = { Linen: 0, "Cotton Blend": 1200, "Performance Velvet": 3200, "Outdoor Canvas": 2400, Leather: 6500 };
 
-function kindFor(category: string) { const value = category.toLowerCase(); if (value.includes("sofa")) return "sofa"; if (value.includes("table")) return "table"; if (/cupboard|console|dressing/.test(value)) return "cabinet"; if (/chair|ottoman|stool/.test(value)) return "chair"; return "default"; }
+function kindFor(category: string) { const value = category.toLowerCase(); if (value.includes("wardrobe")) return "wardrobe"; if (value.includes("sofa")) return "sofa"; if (value.includes("table")) return "table"; if (/cupboard|console|dressing/.test(value)) return "cabinet"; if (/chair|ottoman|stool/.test(value)) return "chair"; return "default"; }
 function profileFor(category: string) { return profiles[kindFor(category)]; }
 function supportsUpholstery(category: string) { return /chair|sofa|ottoman|stool|divan/i.test(category); }
-function capacitiesFor(category: string) { const value = category.toLowerCase(); if (value.includes("sofa")) return ["2 Seater", "3 Seater", "4 Seater"]; if (value.includes("table")) return ["4 Seater", "6 Seater"]; return ["1 Seater"]; }
+function capacitiesFor(category: string) { const value = category.toLowerCase(); if (value.includes("bedside") || value.includes("cupboard") || value.includes("console") || value.includes("dressing")) return ["Single Unit"]; if (value.includes("wardrobe")) return ["2 Door", "3 Door", "4 Door"]; if (value === "bed" || value === "beds") return ["Single", "Double", "Queen", "King"]; if (value.includes("divan")) return ["Single", "Double", "Queen", "King"]; if (value.includes("sofa")) return ["2 Seater", "3 Seater", "4 Seater"]; if (value.includes("table")) return ["4 Seater", "6 Seater", "8 Seater"]; if (value.includes("chair") || value.includes("ottoman") || value.includes("stool")) return ["1 Seater"]; return ["1 Seater"]; }
 function materialsFor(category: string) { const value = category.toLowerCase(); if (value.includes("sofa")) return ["Premium Upholstery", "Premium Wood", "Teak", "Walnut"]; if (value.includes("dining table")) return ["Premium Wood", "Teak", "Walnut"]; if (value.includes("bar stool")) return ["Premium Wood", "Natural Rattan", "Teak", "Walnut", "Weather-resistant Aluminium"]; return materials; }
 function finishesFor(category: string) { return category.toLowerCase().includes("sofa") ? [] : finishes; }
 
@@ -50,7 +50,8 @@ export function CustomizeExperience({ selectedProduct, products, categories, sel
   const upholsteryEnabled = supportsUpholstery(product?.category ?? "");
   const price = product ? (() => {
     const dimensions = Math.max(0, Math.round(((config.width - range[0]) + (config.length - range[1]) + (config.height - range[2])) / 10) * 450);
-    return product.price + dimensions + (baseAdjustments[config.material as keyof typeof baseAdjustments] ?? 0) + (finishAdjustments[config.finish as keyof typeof finishAdjustments] ?? 0) + (upholsteryEnabled ? upholsteryAdjustments[config.upholstery as keyof typeof upholsteryAdjustments] ?? 0 : 0) + (config.capacity === "6 Seater" ? 18000 : config.capacity === "4 Seater" ? 9000 : config.capacity === "3 Seater" ? 12000 : 0);
+    const capacityAdjustment = { "2 Seater": 0, "3 Seater": 12000, "4 Seater": 18000, "6 Seater": 26000, "8 Seater": 34000, Single: 0, Double: 6500, Queen: 12000, King: 18000, "2 Door": 0, "3 Door": 10000, "4 Door": 20000, "Single Unit": 0, "1 Seater": 0 }[config.capacity] ?? 0;
+    return product.price + dimensions + (baseAdjustments[config.material as keyof typeof baseAdjustments] ?? 0) + (finishAdjustments[config.finish as keyof typeof finishAdjustments] ?? 0) + (upholsteryEnabled ? upholsteryAdjustments[config.upholstery as keyof typeof upholsteryAdjustments] ?? 0 : 0) + capacityAdjustment;
   })() : 0;
   const requestQuote = () => { if (!product) return; const message = [`Patio King quote request`, `Product: ${product.name}`, `Category: ${product.category}`, `Product ID: ${product.id}`, `Dimensions: ${config.width} x ${config.length} x ${config.height} cm`, `Style: ${config.style}`, `Material: ${config.material}`, `Finish: ${config.finish}`, `Upholstery: ${config.upholstery || "Not applicable"}`, `Capacity: ${config.capacity}`, `Color: ${config.color}`, `Estimated price: LKR ${price.toLocaleString("en-LK")}`, `Project notes: ${config.notes || "None"}`].join("\n"); setSubmitted(true); window.open(`https://wa.me/94773424994?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer"); };
 

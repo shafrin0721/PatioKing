@@ -10,6 +10,7 @@ const furnitureModels: Record<string, FurnitureModelDefinition> = {
   chairs: { kind: "procedural", label: "Studio chair model" },
   sofa: { kind: "procedural", label: "Studio sofa model" },
   "dining-chairs": { kind: "procedural", label: "Studio dining chair model" },
+  wardrobe: { kind: "gltf", model: "/Patio_King_Wardrobe/wardrobe.glb", label: "Patio King wardrobe model" },
 };
 
 export function getFurnitureModel(type: string) {

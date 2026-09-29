@@ -1,0 +1,15 @@
+{
+  "width_mm": 2400,
+  "height_mm": 2200,
+  "depth_mm": 580,
+  "toe_kick_mm": 55,
+  "drawer_height_mm": 180,
+  "colors": {
+    "wood": "#8C5639",
+    "wood_edge": "#693B27",
+    "interior": "#603A2A",
+    "mirror": "#BCC6C4",
+    "metal": "#C8C8C2",
+    "base": "#1A1817"
+  }
+}
