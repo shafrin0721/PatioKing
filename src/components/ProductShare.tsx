@@ -1,10 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 type ProductShareProps = { productName: string };
 
 type IconProps = { label: string };
+
+function subscribeToLocation(callback: () => void) {
+  window.addEventListener("popstate", callback);
+  return () => window.removeEventListener("popstate", callback);
+}
+
+function getLocationSnapshot() {
+  return window.location.href;
+}
+
+function getServerLocationSnapshot() {
+  return "";
+}
 
 function FacebookIcon({ label }: IconProps) {
   return <svg viewBox="0 0 24 24" aria-label={label} role="img"><path d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v3H6v4h3v8h4v-8h3.5l.5-4H13V9c0-.7.3-1 1-1Z" /></svg>;
@@ -32,11 +45,12 @@ function CopyIcon({ label }: IconProps) {
 
 export function ProductShare({ productName }: ProductShareProps) {
   const [copied, setCopied] = useState(false);
-  const getShareUrl = () => window.location.href;
+  const shareUrl = useSyncExternalStore(subscribeToLocation, getLocationSnapshot, getServerLocationSnapshot);
+  const getShareUrl = () => shareUrl;
   const shareText = `Take a look at ${productName} from Patio King.`;
 
   const copyLink = async () => {
-    await navigator.clipboard.writeText(getShareUrl());
+    await navigator.clipboard.writeText(getShareUrl() || window.location.href);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 2200);
   };

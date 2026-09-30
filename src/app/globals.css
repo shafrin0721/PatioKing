@@ -13,7 +13,8 @@
 .detail-image-wrap { position:relative; overflow:hidden; flex:1; min-height:420px; background:#eee9e1; }
 .detail-image-wrap .detail-image { transition:transform .2s ease; transform-origin:center; }
 .image-zoom-controls { position:absolute; right:14px; bottom:14px; display:flex; align-items:center; gap:8px; padding:6px 8px; background:#fff; border:1px solid var(--line); }
-.image-zoom-controls button { width:28px; height:28px; border:0; background:transparent; font-size:20px; }
+.image-zoom-controls button { display:grid; place-items:center; width:26px; height:26px; border:0; background:transparent; color:#3b352f; }
+.image-zoom-controls button svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
 .image-zoom-controls span { min-width:42px; text-align:center; font:10px var(--mono); }
 .product-options { display:grid; gap:18px; margin:20px 0; }
 .product-option b { display:block; margin-bottom:8px; font:10px var(--mono); letter-spacing:.12em; text-transform:uppercase; }

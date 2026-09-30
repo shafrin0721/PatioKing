@@ -1,65 +1,31 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { Furniture3DViewer } from "./Furniture3DViewer";
-import { getFurnitureModel } from "./furnitureModels";
+import type { FurnitureConfiguration, FurnitureProductSource } from "./FurnitureConfiguration";
+import { FurnitureViewer } from "./FurnitureViewer";
 
-type Product360ViewerProps = {
-  furnitureType: string;
-  material: string;
-  finish: string;
-  upholstery?: string;
-  color: string;
-  width?: number;
-  length?: number;
-  height?: number;
-  productImage?: string;
-};
-
-export function Product360Viewer({
-  furnitureType,
-  material,
-  finish,
-  upholstery = "Linen",
-  color,
-  width = 72,
-  length = 78,
-  height = 86,
-  productImage,
-}: Product360ViewerProps) {
-  const searchParams = useSearchParams();
-
-  const selectedImage = productImage ?? searchParams.get("image") ?? undefined;
-
-  const model = getFurnitureModel(furnitureType);
+export function Product360Viewer({ product, configuration }: { product: FurnitureProductSource; configuration: FurnitureConfiguration }) {
 
   return (
     <div className="product-360-stage">
       <div className="product-preview-layout">
-        {selectedImage && (
+        {product.image && (
           <div className="product-reference-image">
             <img
               className="product-selected-preview"
-              src={selectedImage}
-              alt={`${furnitureType} selected product`}
+              src={product.image}
+              alt={product.name}
               loading="eager"
             />
 
-            <span className="product-reference-label">
-              SELECTED PRODUCT
-            </span>
+            <span className="product-reference-label">ORIGINAL PRODUCT</span>
           </div>
         )}
 
-        <div className="product-interactive-preview"><Furniture3DViewer furnitureType={furnitureType} material={material} finish={finish} upholstery={upholstery} color={color} width={width} length={length} height={height} /></div>
+        <div className="product-interactive-preview"><FurnitureViewer product={product} configuration={configuration} /></div>
       </div>
 
       <div className="product-preview-actions">
-        <span className="viewer-unavailable">
-          {model.kind === "gltf"
-            ? "Interactive 3D product model"
-            : "Interactive furniture preview"}
-        </span>
+        <span className="viewer-unavailable">Product-specific procedural 3D preview</span>
       </div>
     </div>
   );
