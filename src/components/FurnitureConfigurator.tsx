@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { CatalogProduct } from "@/app/products/[id]/page";
 import type { FurnitureConfiguration } from "./FurnitureConfiguration";
-import { FurnitureViewer } from "./FurnitureViewer";
+import { ConfiguratorModel } from "./3d/ConfiguratorModel";
+import { getProductModelPath } from "@/lib/productModelMap";
 import { PageFrame } from "./PatioShell";
 
 type DimensionKey = "width" | "length" | "height";
@@ -112,6 +113,13 @@ function ConfiguratorSummary({ product, configuration, price, onNotesChange, onR
 }
 
 export function FurnitureConfigurator({ product }: { product: CatalogProduct }) {
+  const modelPath = getProductModelPath(product.id, product.category);
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "development") return;
+    console.log("3D product:", product);
+    console.log("3D category:", product.category);
+    console.log("3D model path:", modelPath);
+  }, [modelPath, product]);
   const capacities = capacityOptionsFor(product);
   const materials = materialOptionsFor(product, []);
   const initialValues: ConfiguratorValues = {
@@ -178,7 +186,7 @@ export function FurnitureConfigurator({ product }: { product: CatalogProduct }) 
         <aside className="configurator-preview-column">
           <section className="configurator-preview" aria-label="Product preview">
             <div className="configurator-preview-label"><span>INTERACTIVE 3D PREVIEW</span><span>{product.name.toUpperCase()}</span></div>
-            <FurnitureViewer product={product} configuration={configuration} />
+            <ConfiguratorModel modelPath={modelPath} productName={product.name} configuration={configuration} initialDimensions={product.dimensions} />
             <ProductImage product={product} />
           </section>
           <p className="configurator-preview-note configurator-capability-note">Product-specific 3D form. The selected product image remains the visual reference.</p>
