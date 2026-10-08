@@ -13,13 +13,13 @@ type ConfiguratorValues = FurnitureConfiguration;
 
 const styles = ["Modern", "Traditional", "Contemporary", "Minimal"];
 const finishes = ["Natural", "Honey Oak", "Dark Walnut", "Matte Black", "Whitewash"];
-const colors = ["Warm Neutral", "Forest Green", "Terracotta", "Charcoal", "Natural Wood"];
+const colors = ["Oatmeal", "Sage", "Terracotta", "Deep Teal", "Cobalt Blue", "Marigold", "Berry", "Charcoal", "Natural Wood"];
 const baseMaterialAdjustments: Record<string, number> = { "Premium Wood": 0, "Natural Rattan": 4500, "Premium Upholstery": 8500, Teak: 12000, Walnut: 18000, "Weather-resistant Aluminium": 9500 };
 const finishAdjustments: Record<string, number> = { Natural: 0, "Honey Oak": 2500, "Dark Walnut": 4500, "Matte Black": 1800, Whitewash: 2200 };
-const colorAdjustments: Record<string, number> = { "Warm Neutral": 0, "Forest Green": 3200, Terracotta: 2200, Charcoal: 1800, "Natural Wood": 0 };
+const colorAdjustments: Record<string, number> = { Oatmeal: 0, Sage: 1800, Terracotta: 2200, "Deep Teal": 3200, "Cobalt Blue": 3200, Marigold: 2400, Berry: 3200, Charcoal: 1800, "Natural Wood": 0 };
 const upholsteryAdjustments: Record<string, number> = { Linen: 0, "Cotton Blend": 1200, "Performance Velvet": 3200, "Outdoor Canvas": 2400, Leather: 6500 };
 const capacityAdjustments: Record<string, number> = { "2 Seater": 0, "3 Seater": 12000, "4 Seater": 18000, "5 Seater": 24000, "6 Seater": 26000, "8 Seater": 34000, Single: 0, Double: 6500, Queen: 12000, King: 18000, "2 Door": 0, "3 Door": 10000, "4 Door": 20000, "Single Unit": 0, "1 Seater": 0 };
-const swatchColors: Record<string, string> = { "Warm Neutral": "#bcae9d", "Forest Green": "#315348", Terracotta: "#a85f43", Charcoal: "#3c4142", "Natural Wood": "#a2783e" };
+const swatchColors: Record<string, string> = { Oatmeal: "#c8bba8", Sage: "#879486", Terracotta: "#a85f43", "Deep Teal": "#315b5a", "Cobalt Blue": "#4169b2", Marigold: "#e0ad35", Berry: "#a84463", Charcoal: "#3c4142", "Natural Wood": "#a2783e" };
 
 function capacityOptionsFor(product: CatalogProduct) {
   const category = product.category.toLowerCase();
@@ -35,7 +35,7 @@ function capacityOptionsFor(product: CatalogProduct) {
 function materialOptionsFor(product: CatalogProduct, supportedMaterials: string[]) {
   if (supportedMaterials.length) return supportedMaterials;
   const category = product.category.toLowerCase();
-  if (/sofa|chair|ottoman|stool|divan|bed/.test(category)) {
+  if (/sofa|chair|ottoman|stool|divan|\bbeds?\b/.test(category)) {
     return category.includes("chair")
       ? ["Premium Upholstery", "Premium Wood", "Natural Rattan", "Teak", "Walnut"]
       : ["Premium Upholstery", "Premium Wood", "Teak", "Walnut"];
@@ -76,9 +76,9 @@ function DimensionControls({ product, configuration, onChange }: { product: Cata
   </section>;
 }
 
-function ColorSelector({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+function ColorSelector({ value, onChange, label }: { value: string; onChange: (value: string) => void; label: string }) {
   return <div className="configurator-field">
-    <div className="configurator-field-heading"><span>Color</span></div>
+    <div className="configurator-field-heading"><span>{label}</span></div>
     <div className="configurator-color-options">
       {colors.map((color) => <button className={value === color ? "selected" : ""} type="button" key={color} onClick={() => onChange(color)} aria-pressed={value === color}><i style={{ backgroundColor: swatchColors[color] }} />{color}</button>)}
     </div>
@@ -133,7 +133,7 @@ export function FurnitureConfigurator({ product }: { product: CatalogProduct }) 
     finish: "Natural",
     upholstery: product.fabrics[0] ?? "",
     capacity: capacities[0] ?? "Single Unit",
-    color: "Warm Neutral",
+    color: "Oatmeal",
     notes: "",
   };
   const [configuration, setConfiguration] = useState(initialValues);
@@ -180,7 +180,7 @@ export function FurnitureConfigurator({ product }: { product: CatalogProduct }) 
             {product.fabrics.length > 0 && <DetailOptions label="Upholstery" values={product.fabrics} value={values.upholstery} onChange={(value) => update("upholstery", value)} />}
             <DetailOptions label="Finish" values={finishes} value={values.finish} onChange={(value) => update("finish", value)} />
             <DetailOptions label="Capacity" values={capacities} value={values.capacity} onChange={(value) => update("capacity", value)} />
-            <ColorSelector value={values.color} onChange={(value) => update("color", value)} />
+            <ColorSelector label={product.fabrics.length > 0 ? "Fabric color" : "Color"} value={values.color} onChange={(value) => update("color", value)} />
           </section>
         </div>
         <aside className="configurator-preview-column">

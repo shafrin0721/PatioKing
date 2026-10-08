@@ -1,3 +1,4 @@
+.product-image,.reference-product > div,.detail-image,.customizer-choice img { background-color:#e6e9e5; }
 .detail-actions {
   display: flex;
   gap: 10px;
@@ -887,6 +888,22 @@
 /* Keep furniture fully visible in product surfaces; zoom is the intentional crop. */
 .reference-product > div { display:grid; place-items:center; background:#f4f1eb; }
 .reference-product img { object-fit:contain; padding:18px; }
+.reference-grid { align-items:stretch; }
+.reference-product { display:flex; height:100%; min-width:0; flex-direction:column; }
+.reference-product > a { display:flex; flex:1; min-width:0; flex-direction:column; }
+.reference-product > a > div { width:100%; aspect-ratio:1 / 1; flex:0 0 auto; }
+.reference-product > a > div img { width:100%; height:100%; }
+.reference-product h3 { display:-webkit-box; min-height:2.6em; max-height:2.6em; overflow:hidden; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-height:1.3; }
+.reference-product span { display:block; min-height:2.4em; line-height:1.2; }
+body .reference-grid { grid-auto-rows:1fr; align-items:stretch; }
+body .reference-grid .reference-product { display:grid; height:100%; min-width:0; grid-template-rows:1fr auto; padding-bottom:16px; }
+body .reference-grid .reference-product > a { display:grid; min-width:0; min-height:0; grid-template-rows:auto 2.6em 2.4em auto; align-content:start; }
+body .reference-grid .reference-product > a > div { width:100%; aspect-ratio:1 / 1; overflow:hidden; }
+body .reference-grid .reference-product > a > div img { display:block; width:100%; height:100%; }
+body .reference-grid .reference-product h3 { display:-webkit-box; height:2.6em; min-height:2.6em; max-height:2.6em; margin:14px 16px 0; overflow:hidden; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-height:1.3; }
+body .reference-grid .reference-product span { display:block; min-height:2.4em; margin:0 16px; overflow:hidden; line-height:1.2; }
+body .reference-grid .reference-product strong { min-height:1.2em; margin:12px 16px 0; }
+body .reference-grid .catalog-inquiry-link { display:flex; width:auto; min-height:44px; margin:16px 16px 0; box-sizing:border-box; align-items:center; justify-content:center; }
 .product-detail-page .detail-image { width:100%; height:100%; min-height:420px; object-fit:contain; padding:24px; }
 .product-detail-page .detail-gallery { min-height:620px; }
 .product-detail-page .detail-image-wrap { min-height:560px; display:grid; place-items:center; }

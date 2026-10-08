@@ -33,9 +33,13 @@ const fabricColors: Record<string, string> = {
   Leather: "#704838",
 };
 const accentColors: Record<string, string> = {
-  "Warm Neutral": "#bcae9d",
-  "Forest Green": "#315348",
+  Oatmeal: "#c8bba8",
+  Sage: "#879486",
   Terracotta: "#a85f43",
+  "Deep Teal": "#315b5a",
+  "Cobalt Blue": "#4169b2",
+  Marigold: "#e0ad35",
+  Berry: "#a84463",
   Charcoal: "#3c4142",
   "Natural Wood": "#a2783e",
 };
@@ -145,7 +149,7 @@ function ConfigurableGLB({ modelPath, configuration, initialDimensions, onBounds
     const materialWood = configuration.finish === "Natural"
       ? woodColors[configuration.material] ?? woodColors["Premium Wood"]
       : finishColors[configuration.finish] ?? woodColors["Premium Wood"];
-    const fabric = configuration.color !== "Warm Neutral" && configuration.color !== "Natural Wood"
+    const fabric = configuration.color !== "Oatmeal" && configuration.color !== "Natural Wood"
       ? accentColors[configuration.color]
       : fabricColors[configuration.upholstery] ?? "#c9c0ae";
     const wood = configuration.color !== "Warm Neutral" && configuration.color !== "Natural Wood" && !/sofa|chair|bed|divan|ottoman/i.test(configuration.category)

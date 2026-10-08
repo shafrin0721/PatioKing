@@ -6,19 +6,28 @@ import { PatioFooter, PatioHeader } from "@/components/PatioShell";
 
 const images = {
   hero: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2200&q=90",
-  intro: "https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&w=1100&q=88",
+  intro: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1100&q=88",
   living: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1100&q=88",
   dining: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=85",
   outdoor: "https://images.unsplash.com/photo-1532372320572-cda25653a26d?auto=format&fit=crop&w=900&q=85",
   custom: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1100&q=88",
   craft: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1100&q=88",
   journal: [
-    "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=85",
-    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=85",
-    "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=800&q=85",
-    "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=85",
+    "/assets/projects/Modern%20Organic%20Home%20Interior%20with%20Warm%20Wood,%20Indoor%20Plants%20%26%20Open%20Living%20Design.jpg",
+    "/assets/projects/Warm%20Organic%20Living%20Room%20Ideas%20for%20a%20Relaxed%20Home.jpg",
+    "/assets/projects/Budget-Friendly%20Modern%20Farmhouse%20Living%20Room%20Designs.jpg",
+    "/assets/projects/Echa%20un%20vistazo%20a%20esta%20foto%20de%20Mairelys%20Vargas.jpg",
   ],
 };
+
+const homeSpaces = [
+  { label: "Living", href: "/shop?group=living", image: "/assets/sofa/WhatsApp%20Image%202026-09-21%20at%201.18.42%20PM%20%281%29.jpeg" },
+  { label: "Bedroom", href: "/shop?group=bedroom", image: "/assets/Beds/IMG-20260204-WA0565.jpg" },
+  { label: "Kitchen & Dining", href: "/shop?group=kitchen-dining", image: "/assets/Dining%20tables/WhatsApp%20Image%202026-09-21%20at%2011.11.03%20AM%20%281%29.jpeg" },
+  { label: "Outdoor", href: "/shop?group=outdoor", image: "/assets/Relaxing%20chairs/WhatsApp%20Image%202026-09-21%20at%201.11.51%20PM.jpeg" },
+  { label: "Accents & Décor Furniture", href: "/shop?group=accent-decor", image: "/assets/PoufOttoman/WhatsApp%20Image%202026-09-21%20at%2011.18.36%20AM%20%281%29.jpeg" },
+  { label: "Customised", href: "/customize", image: "/assets/projects/download%20(2).jpg" },
+];
 
 const testimonials = [
   { quote: "Patio King helped us create furniture that perfectly suited our space. The attention to detail and overall experience were excellent.", name: "Client testimonial", role: "Homeowner / replace with verified review" },
@@ -41,11 +50,11 @@ export default function Home() {
 
     <section className="home-experience"><div className="home-section-heading"><div><p className="home-kicker">The Patio King experience</p><h2>From Idea to<br /><em>Living Space.</em></h2></div><p>Furniture, custom pieces and considered environments for the way modern life is lived.</p></div><div className="home-service-grid"><Link href="/shop" className="home-service"><b>01</b><h3>Furniture</h3><p>Thoughtfully designed furniture for contemporary homes and spaces.</p></Link><Link href="/customize" className="home-service"><b>02</b><h3>Custom furniture</h3><p>Furniture designed around your dimensions, style and requirements.</p></Link><Link href="/projects" className="home-service"><b>03</b><h3>Interior & outdoor spaces</h3><p>Solutions that complement the character and function of your space.</p></Link><Link href="/projects" className="home-service"><b>04</b><h3>Projects</h3><p>Furniture and design solutions for residential and commercial environments.</p></Link></div></section>
 
-    <section className="home-spaces"><div className="home-section-heading"><div><p className="home-kicker">Designed for every space</p><h2>Made for the<br />Spaces That Matter.</h2></div><p>Pieces that bring a sense of ease, warmth and intention to the places where life happens.</p></div><div className="home-space-grid"><Link className="home-space" href="/projects/1"><div><h3>Living spaces</h3><span>Explore the room →</span></div></Link><Link className="home-space" href="/projects/2"><div><h3>Dining spaces</h3><span>Explore the room →</span></div></Link><Link className="home-space" href="/projects/3"><div><h3>Outdoor living</h3><span>Explore the room →</span></div></Link><Link className="home-space" href="/customize"><div><h3>Custom spaces</h3><span>Make it yours →</span></div></Link></div></section>
+    <section className="home-spaces"><div className="home-section-heading"><div><p className="home-kicker">Designed for every space</p><h2>Made for the<br />Spaces That Matter.</h2></div><p>Furniture for the rooms you gather in, rest in, and make your own.</p></div><div className="home-space-grid">{homeSpaces.map((space) => <Link className="home-space" href={space.href} key={space.label} style={{ backgroundImage: `linear-gradient(180deg, #00000000 35%, #000000b8 100%), url("${space.image}")` }}><div><h3>{space.label}</h3><span>{space.label === "Customised" ? "Make it yours" : "Explore the space"} →</span></div></Link>)}</div></section>
 
     <section className="home-craft"><div className="home-craft-image" role="img" aria-label="Natural materials in a refined interior" /><div className="home-craft-copy"><p className="home-kicker">Crafted with purpose</p><h2>Designed to Last.<br /><em>Made to Belong.</em></h2><p className="home-copy">Every Patio King piece begins with thoughtful design and attention to detail. From material selection to finishing, every element is considered to create furniture that feels as good as it looks.</p><div className="home-value-list"><article><b>01</b><div><h3>Quality materials</h3><p>Selected materials and finishes designed for everyday use and long-term durability.</p></div></article><article><b>02</b><div><h3>Attention to detail</h3><p>Carefully considered construction, proportions and finishing.</p></div></article><article><b>03</b><div><h3>Timeless design</h3><p>Contemporary forms designed to remain relevant beyond trends.</p></div></article></div></div></section>
 
-    <section className="home-custom"><div className="home-custom-copy"><p className="home-kicker">Made for you</p><h2>Your Space.<br />Your Dimensions.<br /><em>Your Furniture.</em></h2><p className="home-copy">Not every space follows a standard size. Our customization experience allows you to create furniture around the way you live, the dimensions of your space and the style you love.</p><div className="home-process"><span>01<br /><b>CHOOSE</b></span><span>02<br /><b>CUSTOMIZE</b></span><span>03<br /><b>CRAFT</b></span><span>04<br /><b>ENJOY</b></span></div><Link className="home-button light" href="/customize">Create your custom piece <span>→</span></Link></div></section>
+    <section className="home-custom"><div className="home-custom-copy"><p className="home-kicker">Made for you</p><h2>Your Space.<br />Your Dimensions.<br /><em>Your Furniture.</em></h2><p className="home-copy">Start with the room you have. Set your dimensions, choose materials and finishes, then tell us what you need. We&apos;ll help shape it into a piece that feels like yours.</p><div className="home-process"><span>01<br /><b>CHOOSE</b></span><span>02<br /><b>CUSTOMIZE</b></span><span>03<br /><b>CRAFT</b></span><span>04<br /><b>ENJOY</b></span></div><Link className="home-button light" href="/customize">Start your design <span>→</span></Link></div></section>
 
     <section className="home-projects"><div className="home-section-heading"><div><p className="home-kicker">Our projects</p><h2>Furniture in<br /><em>Real Spaces.</em></h2></div><p>Explore spaces where thoughtful design, craftsmanship and functionality come together.</p></div><div className="home-project-grid"><Link className="home-project" href="/projects/1"><div className="home-project-image"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=88" alt="Modern residence interior" /></div><small>Modern residence</small><h3>Modern Residence</h3><span>Residential</span><b className="home-project-link">View project →</b></Link><Link className="home-project" href="/projects/2"><div className="home-project-image"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=88" alt="Contemporary home interior" /></div><small>Contemporary home</small><h3>Contemporary Home</h3><span>Residential</span><b className="home-project-link">View project →</b></Link><Link className="home-project" href="/projects/3"><div className="home-project-image"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=88" alt="Outdoor living space" /></div><small>Outdoor living</small><h3>Outdoor Living</h3><span>Residential / Hospitality</span><b className="home-project-link">View project →</b></Link></div><div style={{ textAlign: "center", marginTop: 55 }}><Link className="home-project-link" href="/projects">View all projects →</Link></div></section>
 

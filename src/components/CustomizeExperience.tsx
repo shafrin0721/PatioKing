@@ -13,7 +13,8 @@ const styles = ["Modern", "Traditional", "Contemporary", "Minimal"];
 const materials = ["Premium Wood", "Natural Rattan", "Premium Upholstery", "Teak", "Walnut", "Weather-resistant Aluminium"];
 const finishes = ["Natural", "Honey Oak", "Dark Walnut", "Matte Black", "Whitewash"];
 const upholsteryOptions = ["Linen", "Cotton Blend", "Performance Velvet", "Outdoor Canvas", "Leather"];
-const colors = ["Warm Neutral", "Forest Green", "Terracotta", "Charcoal", "Natural Wood"];
+const colors = ["Oatmeal", "Sage", "Terracotta", "Deep Teal", "Cobalt Blue", "Marigold", "Berry", "Charcoal", "Natural Wood"];
+const colorSwatches: Record<string, string> = { Oatmeal: "#c8bba8", Sage: "#879486", Terracotta: "#a85f43", "Deep Teal": "#315b5a", "Cobalt Blue": "#4169b2", Marigold: "#e0ad35", Berry: "#a84463", Charcoal: "#3c4142", "Natural Wood": "#a2783e" };
 const defaultDimensions: [number, number, number] = [120, 80, 80];
 const baseAdjustments: Record<string, number> = { "Premium Wood": 0, "Natural Rattan": 4500, "Premium Upholstery": 8500, Teak: 12000, Walnut: 18000, "Weather-resistant Aluminium": 9500 };
 const finishAdjustments: Record<string, number> = { Natural: 0, "Honey Oak": 2500, "Dark Walnut": 4500, "Matte Black": 1800, Whitewash: 2200 };
@@ -24,7 +25,7 @@ function dimensionsFor(product?: CatalogProduct): [number, number, number] {
 }
 
 function supportsUpholstery(category: string) {
-  return /chair|sofa|ottoman|stool|divan|bed/i.test(category);
+  return /chair|sofa|ottoman|stool|divan|\bbeds?\b/i.test(category);
 }
 
 function capacitiesFor(category: string) {
@@ -52,7 +53,7 @@ function initialConfiguration(product?: CatalogProduct): FurnitureConfiguration 
     finish: "Natural",
     upholstery: product?.fabrics[0] ?? (usesUpholstery ? "Linen" : ""),
     capacity: product ? capacitiesFor(product.category)[0] ?? "Single Unit" : "Single Unit",
-    color: "Warm Neutral",
+    color: "Oatmeal",
     notes: "",
   };
 }
@@ -75,7 +76,7 @@ export function CustomizeExperience({ selectedProduct, products, categories, sel
   const price = product ? (() => {
     const dimensionChange = Math.max(0, Math.round(((config.width - dimensions[0]) + (config.length - dimensions[1]) + (config.height - dimensions[2])) / 10) * 450);
     const capacityAdjustments: Record<string, number> = { "2 Seater": 0, "3 Seater": 12000, "4 Seater": 18000, "5 Seater": 24000, "6 Seater": 26000, "8 Seater": 34000, Single: 0, Double: 6500, Queen: 12000, King: 18000, "2 Door": 0, "3 Door": 10000, "4 Door": 20000, "Single Unit": 0, "1 Seater": 0 };
-    const colorAdjustments: Record<string, number> = { "Warm Neutral": 0, "Forest Green": 3200, Terracotta: 2200, Charcoal: 1800, "Natural Wood": 0 };
+    const colorAdjustments: Record<string, number> = { Oatmeal: 0, Sage: 1800, Terracotta: 2200, "Deep Teal": 3200, "Cobalt Blue": 3200, Marigold: 2400, Berry: 3200, Charcoal: 1800, "Natural Wood": 0 };
     return product.price + dimensionChange + (baseAdjustments[config.material] ?? 0) + (finishAdjustments[config.finish] ?? 0) + (upholsteryEnabled ? fabricAdjustments[config.upholstery] ?? 0 : 0) + (colorAdjustments[config.color] ?? 0) + (capacityAdjustments[config.capacity] ?? 0);
   })() : 0;
 
@@ -166,8 +167,8 @@ export function CustomizeExperience({ selectedProduct, products, categories, sel
             </>}
             <div className="selection-heading"><span>Capacity</span></div>
             <div className="customizer-grid option-grid">{capacityOptions.map((item) => <button type="button" className={config.capacity === item ? "selected" : ""} onClick={() => update("capacity", item)} key={item}>{item}</button>)}</div>
-            <div className="selection-heading"><span>Color</span></div>
-            <div className="customizer-grid option-grid">{colors.map((item) => <button type="button" className={config.color === item ? "selected" : ""} onClick={() => update("color", item)} key={item}>{item}</button>)}</div>
+            <div className="selection-heading"><span>{upholsteryEnabled ? "Fabric color" : "Color"}</span></div>
+            <div className="customizer-grid option-grid">{colors.map((item) => <button type="button" className={config.color === item ? "selected" : ""} onClick={() => update("color", item)} key={item}><i className="color-swatch" style={{ backgroundColor: colorSwatches[item] }} />{item}</button>)}</div>
             <label className="notes-field">Project notes<textarea value={config.notes} onChange={(event) => update("notes", event.target.value)} placeholder="Tell us about your space and timeline..." /></label>
           </section>
         </div>

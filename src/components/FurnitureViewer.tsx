@@ -15,12 +15,12 @@ type Palette = Record<Surface, string> & { upholsteryRoughness: number };
 const finishColors: Record<string, string> = { Natural: "#9a6b43", "Honey Oak": "#c58b4d", "Dark Walnut": "#3a2723", "Matte Black": "#242526", Whitewash: "#d5cec2" };
 const fabricColors: Record<string, string> = { Linen: "#c9c0ae", "Cotton Blend": "#a9ada7", "Performance Velvet": "#526b64", "Outdoor Canvas": "#b5a78e", Leather: "#704838" };
 const fabricRoughness: Record<string, number> = { Linen: 0.94, "Cotton Blend": 0.9, "Performance Velvet": 0.84, "Outdoor Canvas": 0.96, Leather: 0.58 };
-const accentColors: Record<string, string> = { "Warm Neutral": "#bcae9d", "Forest Green": "#315348", Terracotta: "#a85f43", Charcoal: "#3c4142", "Natural Wood": "#a2783e" };
+const accentColors: Record<string, string> = { Oatmeal: "#c8bba8", Sage: "#879486", Terracotta: "#a85f43", "Deep Teal": "#315b5a", "Cobalt Blue": "#4169b2", Marigold: "#e0ad35", Berry: "#a84463", Charcoal: "#3c4142", "Natural Wood": "#a2783e" };
 
 function paletteFor(configuration: FurnitureConfiguration, kind: string): Palette {
   const materialColors: Record<string, string> = { "Premium Wood": "#9a6b43", "Natural Rattan": "#c39a61", "Premium Upholstery": "#9a6b43", Teak: "#a85d3c", Walnut: "#4a2d25", "Weather-resistant Aluminium": "#798384" };
   const upholstered = ["chair", "sofa", "bed", "ottoman"].includes(kind);
-  const colorOverride = configuration.color !== "Warm Neutral" ? accentColors[configuration.color] : undefined;
+  const colorOverride = configuration.color !== "Oatmeal" ? accentColors[configuration.color] : undefined;
   const wood = configuration.finish === "Natural" ? materialColors[configuration.material] ?? "#9a6b43" : finishColors[configuration.finish] ?? "#9a6b43";
   return {
     wood: !upholstered && colorOverride ? colorOverride : wood,

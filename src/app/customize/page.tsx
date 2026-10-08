@@ -8,8 +8,12 @@ export default async function CustomizePage({ searchParams }: { searchParams: Pr
   const { category, productId } = await searchParams;
   if (productId) redirect(`/customize/${encodeURIComponent(productId)}`);
   const catalogCategories = getCatalogCategories(true);
-  const categories = catalogCategories;
+  const coffeeTables = catalogCategories.find((item) => item.id === "coffee-table");
+  const categories = coffeeTables
+    ? [...catalogCategories, { id: "reading-tables", name: "Reading Tables", category: "Reading Tables", image: coffeeTables.image }]
+    : catalogCategories;
   const canonicalCategory = category ? canonicalCategoryId(category) : undefined;
+  const selectedCategory = category?.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   const products = canonicalCategory ? getCatalog(canonicalCategory) : [];
   const selectedProduct = productId ? getProduct(productId) : undefined;
 
@@ -17,5 +21,5 @@ export default async function CustomizePage({ searchParams }: { searchParams: Pr
     return <PageFrame><section className="customizer-page customizer-empty"><small>PRODUCT NOT FOUND</small><h1>We couldn&apos;t find<br /><em>that piece.</em></h1><p>The requested product is no longer available.</p><Link className="dark-button" href="/shop">Back to shop <span>→</span></Link></section></PageFrame>;
   }
 
-  return <CustomizeExperience key={`${productId ?? "chooser"}-${canonicalCategory ?? "all"}`} selectedProduct={selectedProduct} products={products} categories={categories} selectedCategory={canonicalCategory} />;
+  return <CustomizeExperience key={`${productId ?? "chooser"}-${selectedCategory ?? "all"}`} selectedProduct={selectedProduct} products={products} categories={categories} selectedCategory={selectedCategory} />;
 }
