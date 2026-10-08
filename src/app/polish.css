@@ -29,14 +29,25 @@
 
 .detail-actions .buy,
 .buy {
-  background: #dcef24;
-  border-color: #171717;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100%, 320px);
+  min-height: 54px;
+  padding: 15px 19px;
+  background: #c94e43;
+  border-color: #c94e43;
+  color: #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
 }
 
 .detail-actions .buy:hover,
 .buy:hover {
-  background: #bfd000;
-  color: #111;
+  background: #a93d34;
+  border-color: #a93d34;
+  color: #fff;
 }
 
 .quantity {
@@ -903,7 +914,9 @@ body .reference-grid .reference-product > a > div img { display:block; width:100
 body .reference-grid .reference-product h3 { display:-webkit-box; height:2.6em; min-height:2.6em; max-height:2.6em; margin:14px 16px 0; overflow:hidden; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-height:1.3; }
 body .reference-grid .reference-product span { display:block; min-height:2.4em; margin:0 16px; overflow:hidden; line-height:1.2; }
 body .reference-grid .reference-product strong { min-height:1.2em; margin:12px 16px 0; }
-body .reference-grid .catalog-inquiry-link { display:flex; width:auto; min-height:44px; margin:16px 16px 0; box-sizing:border-box; align-items:center; justify-content:center; }
+body .reference-grid .catalog-inquiry-link { display:flex !important; flex-flow:row nowrap; width:auto; height:52px; min-height:52px; max-height:52px; margin:12px 16px 0; padding:0 18px; box-sizing:border-box; align-items:center; justify-content:center; gap:12px; line-height:1; white-space:nowrap; }
+body .reference-grid .catalog-inquiry-link .catalog-inquiry-label { display:inline-block; flex:0 0 auto; width:auto; height:auto; min-height:0; margin:0; overflow:visible; font-size:11px; line-height:1; }
+body .reference-grid .catalog-inquiry-link .catalog-inquiry-arrow { display:inline-flex; flex:0 0 auto; width:auto; height:auto; min-height:0; margin:0; overflow:visible; font-size:19px; line-height:1; }
 .product-detail-page .detail-image { width:100%; height:100%; min-height:420px; object-fit:contain; padding:24px; }
 .product-detail-page .detail-gallery { min-height:620px; }
 .product-detail-page .detail-image-wrap { min-height:560px; display:grid; place-items:center; }
