@@ -20,13 +20,15 @@ const images = {
   ],
 };
 
+const productImage = (category: string, file: string) => `/assets/${encodeURIComponent(category)}/${encodeURIComponent(file)}`;
+
 const homeSpaces = [
-  { label: "Living", href: "/shop?group=living", image: "/assets/sofa/WhatsApp%20Image%202026-09-21%20at%201.18.42%20PM%20%281%29.jpeg" },
-  { label: "Bedroom", href: "/shop?group=bedroom", image: "/assets/Beds/IMG-20260204-WA0565.jpg" },
-  { label: "Kitchen & Dining", href: "/shop?group=kitchen-dining", image: "/assets/Dining%20tables/WhatsApp%20Image%202026-09-21%20at%2011.11.03%20AM%20%281%29.jpeg" },
-  { label: "Outdoor", href: "/shop?group=outdoor", image: "/assets/Relaxing%20chairs/WhatsApp%20Image%202026-09-21%20at%201.11.51%20PM.jpeg" },
-  { label: "Accents & Décor Furniture", href: "/shop?group=accent-decor", image: "/assets/PoufOttoman/WhatsApp%20Image%202026-09-21%20at%2011.18.36%20AM%20%281%29.jpeg" },
-  { label: "Customised", href: "/customize", image: "/assets/projects/download%20(2).jpg" },
+  { label: "Living", href: "/shop?group=living", image: productImage("Coffee tables", "IMG-20260204-WA0104.jpg") },
+  { label: "Bedroom", href: "/shop?group=bedroom", image: productImage("Beds", "IMG-20260204-WA0565.jpg") },
+  { label: "Kitchen & Dining", href: "/shop?group=kitchen-dining", image: productImage("Dining tables", "IMG-20260204-WA0425.jpg") },
+  { label: "Outdoor", href: "/shop?group=outdoor", image: productImage("Relaxing chairs", "IMG-20260204-WA0075.jpg") },
+  { label: "Accents & Décor Furniture", href: "/shop?group=accent-decor", image: productImage("Bedside Cupboards", "IMG-20260204-WA0529.jpg") },
+  { label: "Customised", href: "/customize", image: productImage("Dining chairs", "IMG-20260204-WA0467.jpg") },
 ];
 
 const testimonials = [
