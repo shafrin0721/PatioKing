@@ -20,15 +20,15 @@ const images = {
   ],
 };
 
-const productImage = (category: string, file: string) => `/assets/${encodeURIComponent(category)}/${encodeURIComponent(file)}`;
+const spaceImage = (file: string) => `/assets/${encodeURIComponent(file)}`;
 
 const homeSpaces = [
-  { label: "Living", href: "/shop?group=living", image: productImage("Coffee tables", "IMG-20260204-WA0104.jpg") },
-  { label: "Bedroom", href: "/shop?group=bedroom", image: productImage("Beds", "IMG-20260204-WA0565.jpg") },
-  { label: "Kitchen & Dining", href: "/shop?group=kitchen-dining", image: productImage("Dining tables", "IMG-20260204-WA0425.jpg") },
-  { label: "Outdoor", href: "/shop?group=outdoor", image: productImage("Relaxing chairs", "IMG-20260204-WA0075.jpg") },
-  { label: "Accents & Décor Furniture", href: "/shop?group=accent-decor", image: productImage("Bedside Cupboards", "IMG-20260204-WA0529.jpg") },
-  { label: "Customised", href: "/customize", image: productImage("Dining chairs", "IMG-20260204-WA0467.jpg") },
+  { label: "Living", href: "/shop?group=living", image: spaceImage("14 Stylish Living Room Decor Ideas for Everyday Charm.jpeg") },
+  { label: "Bedroom", href: "/shop?group=bedroom", image: spaceImage("✨ Modern Master Bedroom with a Curved Backlit Accent Wall.jpeg") },
+  { label: "Kitchen & Dining", href: "/shop?group=kitchen-dining", image: spaceImage("Luxury Modern Kitchen & Dining Room Ideas _ Warm European Interior Design.jpeg") },
+  { label: "Outdoor", href: "/shop?group=outdoor", image: spaceImage("Cozy Outdoor Patio Ideas with String Lights.jpeg") },
+  { label: "Accents & Décor Furniture", href: "/shop?group=accent-decor", image: spaceImage("Ottoman Tray Styling Ideas.jpeg") },
+  { label: "Customised", href: "/customize", image: "/assets/projects/Echa%20un%20vistazo%20a%20esta%20foto%20de%20Mairelys%20Vargas.jpg" },
 ];
 
 const testimonials = [

@@ -12,6 +12,24 @@ export type CatalogProduct = { id: string; name: string; category: string; room:
 export type CatalogCategory = { id: string; name: string; category: string; image: string };
 const assetsDirectory = path.join(process.cwd(), "public", "assets");
 const categoryPrices: Record<string, number> = { bed: 135000, "bedside-cupboard": 42000, cupboard: 68000, "coffee-table": 52000, "dining-chair": 28000, "dining-table": 125000, divan: 85000, "dressing-table": 78000, "l-sofa": 185000, "pouf-ottoman": 32000, "relaxing-chair": 72000, "rocking-chair": 68000, "round-sofa": 155000, "single-chair": 52000, sofa: 145000, "tv-console": 88000 };
+const excludedProductIds = new Set([
+  "bar-stool-solace-23",
+  "bar-stool-ridge-21",
+  "bar-stool-luna-16",
+  "bar-stool-aurora-27",
+  "bed-milo-44",
+  "bedside-cupboard-aurora",
+  "dining-chair-luna-64",
+  "dining-chair-harbor-65",
+  "l-sofa-aurora-27",
+  "pouf-ottoman-ridge",
+  "round-sofa-ember-22",
+  "single-chair-solace-23",
+  "single-chair-solace-47",
+  "single-chair-nova-54",
+  "sofa-studio-14",
+  "bed-aurora-39",
+]);
 function slug(value: string) { return value.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 function singularizeCategoryKey(value: string) {
   return value
@@ -63,9 +81,43 @@ function productDimensions(categoryId: string) {
   return { width: 90, depth: 85, height: 82 };
 }
 function productDetails(categoryId: string, category: string) { const upholstered = /chair|sofa|divan|ottoman|\bbeds?\b/.test(categoryId); const dimensions = productDimensions(categoryId); return { room: roomForCategory(categoryId), description: `The ${category.toLowerCase()} is designed for considered everyday living, balancing generous proportions with a refined Patio King silhouette. Each detail is made to feel comfortable, useful and at home in a modern space.`, narration: `A ${category.toLowerCase()} with a calm presence and practical proportions, made to bring warmth and character to your home.`, materials: upholstered ? ["Kiln-dried hardwood frame", "High-resilience foam", "Solid wood details"] : ["Solid hardwood", "Engineered wood core", "Durable protective coating"], colours: ["Natural Wood", "Honey Oak", "Walnut", "Matte Black"], fabrics: upholstered ? ["Linen", "Cotton Blend", "Performance Velvet", "Leather"] : [], finishes: ["Natural", "Honey Oak", "Dark Walnut", "Matte Black", "Whitewash"], dimensions }; }
-export function getCatalog(categoryId?: string): CatalogProduct[] { if (!fs.existsSync(assetsDirectory)) return []; const requestedCategory = categoryId ? canonicalCategoryId(categoryId) : undefined; return fs.readdirSync(assetsDirectory, { withFileTypes: true }).filter((entry) => entry.isDirectory() && !["projects", "patio"].includes(entry.name.toLowerCase())).sort((a, b) => a.name.localeCompare(b.name)).flatMap((entry) => { const entryCategoryId = canonicalCategoryId(entry.name); const files = fs.readdirSync(path.join(assetsDirectory, entry.name)).filter((file) => /\.(jpe?g|png|webp)$/i.test(file)).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })); const category = label(entry.name); return files.map((file, index) => { const gallery = files.map((item) => assetPath(entry.name, item)); const image = assetPath(entry.name, file); const name = productDisplayName(category, index); const id = slug(name); const details = productDetails(entryCategoryId, category);
-const product: CatalogProduct = { id, name, category, price: categoryPrices[entryCategoryId] ?? 35000, image, gallery, ...details, variants: details.finishes.map((finish, variantIndex) => ({ label: finish, image, priceAdjustment: variantIndex * 2500 })) };
-    return !requestedCategory || requestedCategory === entryCategoryId ? product : null; }).filter((product): product is CatalogProduct => product !== null); }); }
+export function getCatalog(categoryId?: string): CatalogProduct[] {
+  if (!fs.existsSync(assetsDirectory)) return [];
+  const requestedCategory = categoryId ? canonicalCategoryId(categoryId) : undefined;
+  return fs.readdirSync(assetsDirectory, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && !["projects", "patio"].includes(entry.name.toLowerCase()))
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .flatMap((entry) => {
+      const entryCategoryId = canonicalCategoryId(entry.name);
+      const files = fs.readdirSync(path.join(assetsDirectory, entry.name))
+        .filter((file) => /\.(jpe?g|png|webp)$/i.test(file))
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+      const category = label(entry.name);
+      return files.flatMap((file, index) => {
+        const image = assetPath(entry.name, file);
+        const gallery = [image];
+        const name = productDisplayName(category, index);
+        const id = slug(name);
+        if (excludedProductIds.has(id) || (requestedCategory && requestedCategory !== entryCategoryId)) return [];
+        const details = productDetails(entryCategoryId, category);
+        const product: CatalogProduct = {
+          id,
+          name,
+          category,
+          price: categoryPrices[entryCategoryId] ?? 35000,
+          image,
+          gallery,
+          ...details,
+          variants: details.finishes.map((finish, variantIndex) => ({
+            label: finish,
+            image,
+            priceAdjustment: variantIndex * 2500,
+          })),
+        };
+        return [product];
+      });
+    });
+}
 export function getProduct(id: string) {
   const normalizedId = slug(id);
   const catalog = getCatalog();
@@ -81,5 +133,5 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const relatedProducts = getCatalog().filter((item) => item.category === product.category && item.id !== product.id).slice(0, 4);
   const inquiryMessage = [`Patio King product inquiry`, `Product: ${product.name}`, `Category: ${product.category}`, `Product ID: ${product.id}`, `Price: LKR ${product.price.toLocaleString("en-LK")}`, `Details: ${product.category} available for inquiry.`].join("\n");
   const inquiryHref = `https://wa.me/94773424994?text=${encodeURIComponent(inquiryMessage)}`;
-  return <PageFrame><section className="product-detail-page"><Link className="back-link" href="/shop"><span aria-hidden="true">←</span> Back to Shop</Link><div className="detail-main"><ProductGallery images={product.gallery} name={product.name} /><div className="detail-copy"><h1>{product.name}</h1><div className="rating">★★★★★ <small>{product.category} / {product.room}</small></div><div className="detail-price"><b>LKR {product.price.toLocaleString("en-LK")}</b></div><p>{product.description}</p><p className="product-narration">{product.narration}</p><div className="detail-actions"><a className="buy" href={inquiryHref} target="_blank" rel="noreferrer">Inquire Now <span aria-hidden="true">→</span></a></div><ProductShare productName={product.name} /><small>Category: {product.category}</small></div></div><ProductTabs name={product.name} category={product.category} products={relatedProducts} description={product.description} materials={product.materials} finishes={[]} dimensions={product.dimensions} /></section></PageFrame>;
+  return <PageFrame><section className="product-detail-page"><Link className="back-link" href="/shop"><span aria-hidden="true">←</span> Back to Shop</Link><div className="detail-main"><ProductGallery key={product.id} images={product.gallery} name={product.name} /><div className="detail-copy"><h1>{product.name}</h1><div className="rating">★★★★★ <small>{product.category} / {product.room}</small></div><div className="detail-price"><b>LKR {product.price.toLocaleString("en-LK")}</b></div><p>{product.description}</p><p className="product-narration">{product.narration}</p><div className="detail-actions"><a className="buy" href={inquiryHref} target="_blank" rel="noreferrer">Inquire Now <span aria-hidden="true">→</span></a></div><ProductShare productName={product.name} /><small>Category: {product.category}</small></div></div><ProductTabs name={product.name} category={product.category} products={relatedProducts} description={product.description} materials={product.materials} finishes={[]} dimensions={product.dimensions} /></section></PageFrame>;
 }

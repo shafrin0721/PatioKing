@@ -10,7 +10,8 @@
 @import "./appointment-polish.css";
 :root { --ink:#27221e; --paper:#f4f0e9; --clay:#9b442c; --line:#d9d0c3; --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',sans-serif; --mono:'DM Mono',monospace; }
 * { box-sizing:border-box; } html { scroll-behavior:smooth; } body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); } button,input { font:inherit; } button { cursor:pointer; } a { color:inherit; text-decoration:none; }
-.detail-image-wrap { position:relative; overflow:hidden; flex:1; min-height:420px; background:#eee9e1; }
+.detail-image-wrap { position:relative; overflow:hidden; flex:1; min-width:0; height:430px; background:#eee9e1; }
+.detail-image-wrap > .detail-image { display:block; width:100%; height:100%; object-fit:contain; padding:20px; }
 .detail-image-wrap .detail-image { transition:transform .2s ease; transform-origin:center; }
 .image-zoom-controls { position:absolute; right:14px; bottom:14px; display:flex; align-items:center; gap:8px; padding:6px 8px; background:#fff; border:1px solid var(--line); }
 .image-zoom-controls button { display:grid; place-items:center; width:26px; height:26px; border:0; background:transparent; color:#3b352f; }
@@ -36,7 +37,7 @@
 .reference-product > div { background:#f4f1eb; }
 .reference-product img, .product-image img, .detail-image, .customizer-choice img { object-fit:contain !important; padding:10px; }
 .detail-image { background:#eee9e1; }
-@media (max-width:700px) { .detail-image-wrap { min-height:330px; } .product-option button { flex:1 1 auto; } }
+@media (max-width:700px) { .detail-image-wrap { height:310px; } .product-option button { flex:1 1 auto; } }
 .shop-category-explorer { width:100%; padding:24px 0 0; background:#fff; }
 .shop-category-explorer .category-rail { width:100%; max-width:none; margin:0; padding:18px 48px 24px; gap:28px; overflow:hidden; }
 .shop-category-explorer .category-rail-track { justify-content:space-evenly; align-items:flex-start; gap:clamp(22px,4vw,68px); padding:0 8px 12px; }

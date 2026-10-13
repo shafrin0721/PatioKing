@@ -116,7 +116,7 @@ export function CustomizeExperience({ selectedProduct, products, categories, sel
         </> : <>
           <h2>Choose a category</h2>
           <div className="customizer-grid type-grid">
-            {categories.map((item) => <Link className="customizer-choice" href={`/customize?category=${encodeURIComponent(item.id)}`} key={item.id}><img src={item.image} alt="" loading="lazy" /><span>{item.name}</span></Link>)}
+            {categories.map((item) => <Link className="customizer-choice" href={`/customize?category=${encodeURIComponent(item.id)}`} key={`${item.id}-${item.name}`}><img src={item.image} alt="" loading="lazy" /><span>{item.name}</span></Link>)}
           </div>
         </>}
       </section>
