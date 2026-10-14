@@ -1,23 +1,11 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 type ProductShareProps = { productName: string };
 
 type IconProps = { label: string };
-
-function subscribeToLocation(callback: () => void) {
-  window.addEventListener("popstate", callback);
-  return () => window.removeEventListener("popstate", callback);
-}
-
-function getLocationSnapshot() {
-  return window.location.href;
-}
-
-function getServerLocationSnapshot() {
-  return "";
-}
 
 function FacebookIcon({ label }: IconProps) {
   return <svg viewBox="0 0 24 24" aria-label={label} role="img"><path d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v3H6v4h3v8h4v-8h3.5l.5-4H13V9c0-.7.3-1 1-1Z" /></svg>;
@@ -43,22 +31,76 @@ function CopyIcon({ label }: IconProps) {
   return <svg viewBox="0 0 24 24" aria-label={label} role="img"><rect x="8" y="8" width="11" height="12" rx="2" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2" /></svg>;
 }
 
+function ShareIcon({ label }: IconProps) {
+  return <svg viewBox="0 0 24 24" aria-label={label} role="img"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="m8.7 10.6 6.6-4.2m-6.6 7 6.6 4.2" /></svg>;
+}
+
 export function ProductShare({ productName }: ProductShareProps) {
-  const [copied, setCopied] = useState(false);
-  const shareUrl = useSyncExternalStore(subscribeToLocation, getLocationSnapshot, getServerLocationSnapshot);
-  const getShareUrl = () => shareUrl;
+  const pathname = usePathname();
+  const shareUrl = new URL(pathname, "https://patiokingv2.com").toString();
+  const [status, setStatus] = useState("");
   const shareText = `Take a look at ${productName} from Patio King.`;
 
-  const copyLink = async () => {
-    await navigator.clipboard.writeText(getShareUrl() || window.location.href);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 2200);
+  const copyLink = async (successMessage = "Link copied.") => {
+    const url = shareUrl;
+    let copied = false;
+
+    if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(url);
+        copied = true;
+      } catch {
+        // Clipboard permissions can fail; try the browser's selection-based copy fallback.
+      }
+    }
+
+    if (!copied) {
+      const input = document.createElement("textarea");
+      input.value = url;
+      input.setAttribute("readonly", "");
+      input.style.position = "fixed";
+      input.style.opacity = "0";
+      document.body.appendChild(input);
+      input.select();
+      try {
+        copied = document.execCommand("copy");
+      } catch {
+        copied = false;
+      }
+      input.remove();
+    }
+
+    setStatus(copied ? successMessage : "Couldn't copy the link. Please copy the page URL from your browser.");
+    window.setTimeout(() => setStatus(""), 3500);
+    return copied;
   };
 
   const shareToInstagram = async () => {
-    await copyLink();
-    window.open("https://www.instagram.com/patioking.lk/", "_blank", "noopener,noreferrer");
+    window.open("https://www.instagram.com/patio.king/", "_blank", "noopener,noreferrer");
+    await copyLink("Link copied. Paste it into your Instagram post or message.");
   };
 
-  return <div className="product-share" aria-label="Share this product"><span>Share</span><div className="product-share-actions"><a className="share-facebook" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(getShareUrl())}`} target="_blank" rel="noreferrer" aria-label={`Share ${productName} on Facebook`} title="Share on Facebook"><FacebookIcon label="Facebook" /></a><button className="share-instagram" type="button" onClick={shareToInstagram} aria-label={`Share ${productName} on Instagram`} title="Copy link and open Instagram"><InstagramIcon label="Instagram" /></button><a className="share-pinterest" href={`https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(getShareUrl())}&description=${encodeURIComponent(shareText)}`} target="_blank" rel="noreferrer" aria-label={`Share ${productName} on Pinterest`} title="Share on Pinterest"><PinterestIcon label="Pinterest" /></a><a className="share-telegram" href={`https://t.me/share/url?url=${encodeURIComponent(getShareUrl())}&text=${encodeURIComponent(shareText)}`} target="_blank" rel="noreferrer" aria-label={`Share ${productName} on Telegram`} title="Share on Telegram"><TelegramIcon label="Telegram" /></a><a className="share-whatsapp" href={`https://wa.me/?text=${encodeURIComponent(`${shareText} ${getShareUrl()}`)}`} target="_blank" rel="noreferrer" aria-label={`Share ${productName} on WhatsApp`} title="Share on WhatsApp"><WhatsAppIcon label="WhatsApp" /></a><button className="share-copy" type="button" onClick={copyLink} aria-label="Copy product link" title="Copy link"><CopyIcon label="Copy link" /></button></div>{copied && <small role="status">Link copied</small>}</div>;
+  const shareFromDevice = async () => {
+    if (!navigator.share) {
+      await copyLink();
+      return;
+    }
+
+    try {
+      await navigator.share({ title: productName, text: shareText, url: shareUrl });
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
+      setStatus("Unable to share this product from your device.");
+    }
+  };
+
+  return <div className="product-share" aria-label="Share this product"><span>Share</span><div className="product-share-actions">
+    <a className="share-facebook" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" aria-label={`Share ${productName} on Facebook`} title="Share on Facebook"><FacebookIcon label="Facebook" /></a>
+    <button className="share-instagram" type="button" onClick={shareToInstagram} aria-label={`Share ${productName} on Instagram`} title="Copy the link and open Instagram"><InstagramIcon label="Instagram" /></button>
+    <a className="share-pinterest" href={`https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&description=${encodeURIComponent(shareText)}`} target="_blank" rel="noopener noreferrer" aria-label={`Share ${productName} on Pinterest`} title="Share on Pinterest"><PinterestIcon label="Pinterest" /></a>
+    <a className="share-telegram" href={`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`} target="_blank" rel="noopener noreferrer" aria-label={`Share ${productName} on Telegram`} title="Share on Telegram"><TelegramIcon label="Telegram" /></a>
+    <a className="share-whatsapp" href={`https://wa.me/94773424994?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`} target="_blank" rel="noopener noreferrer" aria-label={`Share ${productName} on WhatsApp`} title="Share on WhatsApp"><WhatsAppIcon label="WhatsApp" /></a>
+    <button className="share-native" type="button" onClick={shareFromDevice} aria-label={`Share ${productName}`} title="Share using your device"><ShareIcon label="Share" /></button>
+    <button className="share-copy" type="button" onClick={() => copyLink()} aria-label="Copy product link" title="Copy link"><CopyIcon label="Copy link" /></button>
+  </div>{status && <small role="status">{status}</small>}</div>;
 }

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
 import path from "node:path";
@@ -6,6 +5,8 @@ import { PageFrame } from "@/components/PatioShell";
 import { ProductTabs } from "@/components/ProductTabs";
 import { ProductShare } from "@/components/ProductShare";
 import { ProductGallery } from "@/components/ProductGallery";
+import { ProductBackButton } from "@/components/ProductBackButton";
+import { ProductRatingSummary } from "@/components/ProductFeedback";
 
 export type ProductVariant = { label: string; image: string; priceAdjustment: number };
 export type CatalogProduct = { id: string; name: string; category: string; room: string; price: number; image: string; gallery: string[]; description: string; narration: string; materials: string[]; colours: string[]; fabrics: string[]; finishes: string[]; dimensions: { width: number; depth: number; height: number }; variants: ProductVariant[] };
@@ -133,5 +134,5 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const relatedProducts = getCatalog().filter((item) => item.category === product.category && item.id !== product.id).slice(0, 4);
   const inquiryMessage = [`Patio King product inquiry`, `Product: ${product.name}`, `Category: ${product.category}`, `Product ID: ${product.id}`, `Price: LKR ${product.price.toLocaleString("en-LK")}`, `Details: ${product.category} available for inquiry.`].join("\n");
   const inquiryHref = `https://wa.me/94773424994?text=${encodeURIComponent(inquiryMessage)}`;
-  return <PageFrame><section className="product-detail-page"><Link className="back-link" href="/shop"><span aria-hidden="true">←</span> Back to Shop</Link><div className="detail-main"><ProductGallery key={product.id} images={product.gallery} name={product.name} /><div className="detail-copy"><h1>{product.name}</h1><div className="rating">★★★★★ <small>{product.category} / {product.room}</small></div><div className="detail-price"><b>LKR {product.price.toLocaleString("en-LK")}</b></div><p>{product.description}</p><p className="product-narration">{product.narration}</p><div className="detail-actions"><a className="buy" href={inquiryHref} target="_blank" rel="noreferrer">Inquire Now <span aria-hidden="true">→</span></a></div><ProductShare productName={product.name} /><small>Category: {product.category}</small></div></div><ProductTabs name={product.name} category={product.category} products={relatedProducts} description={product.description} materials={product.materials} finishes={[]} dimensions={product.dimensions} /></section></PageFrame>;
+  return <PageFrame><section className="product-detail-page"><ProductBackButton /><div className="detail-main"><ProductGallery key={product.id} images={product.gallery} name={product.name} /><div className="detail-copy"><h1>{product.name}</h1><ProductRatingSummary productId={product.id} category={product.category} room={product.room} /><div className="detail-price"><b>LKR {product.price.toLocaleString("en-LK")}</b></div><p>{product.description}</p><p className="product-narration">{product.narration}</p><div className="detail-actions"><a className="buy" href={inquiryHref} target="_blank" rel="noreferrer">Inquire Now <span aria-hidden="true">→</span></a></div><ProductShare productName={product.name} /><small>Category: {product.category}</small></div></div><ProductTabs productId={product.id} name={product.name} category={product.category} products={relatedProducts} description={product.description} materials={product.materials} finishes={[]} dimensions={product.dimensions} /></section></PageFrame>;
 }
