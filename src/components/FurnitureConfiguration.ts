@@ -21,7 +21,7 @@ export type FurnitureProductSource = {
   dimensions: { width: number; depth: number; height: number };
 };
 
-export type FurnitureModelKind = "table" | "chair" | "sofa" | "bed" | "storage" | "ottoman";
+export type FurnitureModelKind = "table" | "chair" | "sofa" | "bed" | "storage" | "ottoman" | "stool";
 
 export type FurnitureModelConfiguration = {
   productId: string;
@@ -34,6 +34,7 @@ export type FurnitureModelConfiguration = {
 };
 
 const categoryModels: Array<{ pattern: RegExp; kind: FurnitureModelKind }> = [
+  { pattern: /bar[- ]stool|counter[- ]stool/, kind: "stool" },
   { pattern: /ottoman|pouf|stool/, kind: "ottoman" },
   { pattern: /dressing table|dresser|bedside cupboard|cupboard|cabinet|wardrobe|console|storage/, kind: "storage" },
   { pattern: /table|desk/, kind: "table" },

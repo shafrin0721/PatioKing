@@ -19,15 +19,19 @@ export function PatioFooter() {
         <img className="footer-logo" src="/assets/logo.jpeg" alt="Patio King" />
         <p>“We Shape Your Home.” Modern furniture<br />solutions for the discerning lifestyle.</p>
         <div className="socials" aria-label="Patio King social links">
-          <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v3H6v4h3v8h4v-8h3.5l.5-4H13V9c0-.7.3-1 1-1Z" /></svg></a>
           <a href="https://www.instagram.com/patio.king/" target="_blank" rel="noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.3" cy="6.7" r="1" className="social-icon-fill" /></svg></a>
-          <a href="https://www.pinterest.com/" target="_blank" rel="noreferrer" aria-label="Pinterest"><svg viewBox="0 0 24 24"><path d="M12 3a8.5 8.5 0 0 0-3.1 16.4c-.1-1.4 0-3 .4-4.3l1.1-4.7s-.3-.7-.3-1.7c0-1.6.9-2.8 2.1-2.8 1 0 1.5.8 1.5 1.7 0 1-.6 2.4-.9 3.8-.3 1.1.6 2 1.7 2 2.1 0 3.7-2.2 3.7-5.3 0-2.8-2-4.8-5-4.8-3.4 0-5.4 2.6-5.4 5.2 0 1 .4 2 .8 2.5.1.1.1.2.1.4l-.3 1.1c-.1.4-.4.5-.8.3-1.5-.7-2.4-2.8-2.4-4.5C5.2 8.4 8 4.3 13 4.3c4.1 0 6.8 3 6.8 6.2 0 4.2-2.4 7.3-5.8 7.3-1.1 0-2.2-.6-2.6-1.3l-.7 2.7c-.3 1.3-1.1 2.9-1.6 3.9A8.5 8.5 0 1 0 12 3Z" /></svg></a>
-          <a href="https://t.me/" target="_blank" rel="noreferrer" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="m21.7 3.3-3.2 16.1c-.2 1.1-.8 1.4-1.7.9l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.3 13.2l-4.7-1.5c-1-.3-1-1 .2-1.5L20.2 3c.9-.3 1.7.2 1.5.3Z" /></svg></a>
+          <a href="https://wa.me/94773424994" target="_blank" rel="noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L3 20.4l1.3-4.9a8.4 8.4 0 1 1 16.2-3.8Z" /><path d="M8.4 7.8c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.8 1.9c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.3 0 .6.5.9 1.3 1.6 2.2 2.1.3.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.4 0 .3-.2 1-.7 1.4-.5.5-1.2.7-2 .6-1-.2-2.3-.8-3.8-2.1-1.3-1.1-2.2-2.5-2.5-3.4-.3-.9-.1-1.7.3-2.2Z" /></svg></a>
         </div>
       </div>
-      <div><small>Navigation</small><p>Collection<br />Spaces<br />About<br />Process<br />Projects</p></div>
-      <div><small>Contact</small><p>• patiokinginfo@gmail.com<br />• +94 77 342 4994<br />• Sri Lanka</p></div>
-      <div><small>Service</small><p>• Bespoke Design<br />• Site Consultation<br />• After-Sales<br />• Sustainability</p></div>
+      <div><small>Navigation</small><nav className="footer-link-list" aria-label="Footer navigation">
+        <Link href="/">Home</Link><Link href="/shop">Collections</Link><Link href="/about">About</Link><Link href="/customize">Customize</Link><Link href="/projects">Projects</Link>
+      </nav></div>
+      <div><small>Contact</small><nav className="footer-link-list" aria-label="Contact links">
+        <a href="mailto:patiokinginfo@gmail.com">patiokinginfo@gmail.com</a><a href="tel:+94773424994">+94 77 342 4994</a><a href="https://www.google.com/maps/search/?api=1&query=Colombo%2C%20Sri%20Lanka" target="_blank" rel="noreferrer">Colombo, Sri Lanka</a><a href="https://wa.me/94773424994" target="_blank" rel="noreferrer">WhatsApp us</a>
+      </nav></div>
+      <div><small>Service</small><nav className="footer-link-list" aria-label="Service links">
+        <Link href="/customize">Bespoke Design</Link><Link href="/appointment">Site Consultation</Link><Link href="/contact">After-Sales</Link><Link href="/about">Sustainability</Link>
+      </nav></div>
     </div>
     <div className="footer-statement">PATIO KING <i>•</i><br />WE SHAPE<br />YOUR HOME <i>•</i><small>© 2026 Patio King. All Rights Reserved.</small></div>
   </footer>;

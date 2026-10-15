@@ -2,7 +2,7 @@
 
 import { Suspense, useRef } from "react";
 import type { MutableRefObject } from "react";
-import { Bounds, ContactShadows, Environment, OrbitControls } from "@react-three/drei";
+import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
@@ -92,6 +92,18 @@ function FurnitureShape({ product, configuration }: { product: FurnitureProductS
     </group>;
   }
 
+  if (model.kind === "stool") {
+    const legHeight = height * 0.82;
+    const footrestHeight = height * 0.35;
+    return <group>
+      <Box size={[width * 0.9, height * 0.05, depth * 0.9]} position={[0, height * 0.82, 0]} color={palette.wood} />
+      <Box size={[width * 0.95, height * 0.1, depth * 0.95]} position={[0, height * 0.9, 0]} color={palette.wood} roughness={0.58} />
+      {[-1, 1].flatMap((x) => [-1, 1].map((z) => <Box key={`${x}-${z}`} size={[legWidth, legHeight, legWidth]} position={[x * width * 0.38, legHeight / 2, z * depth * 0.38]} color={footColor} />))}
+      {[-1, 1].map((side) => <Box key={`x-${side}`} size={[width * 0.76, legWidth * 0.55, legWidth * 0.55]} position={[0, footrestHeight, side * depth * 0.38]} color={footColor} />)}
+      {[-1, 1].map((side) => <Box key={`z-${side}`} size={[legWidth * 0.55, legWidth * 0.55, depth * 0.76]} position={[side * width * 0.38, footrestHeight, 0]} color={footColor} />)}
+    </group>;
+  }
+
   if (model.kind === "sofa") {
     const seats = Math.max(2, Math.min(5, Number.parseInt(configuration.capacity, 10) || 3));
     const baseY = height * 0.2;
@@ -154,30 +166,34 @@ function FurnitureShape({ product, configuration }: { product: FurnitureProductS
 }
 
 function ViewerScene({ product, configuration, controlsRef }: { product: FurnitureProductSource; configuration: FurnitureConfiguration; controlsRef: MutableRefObject<OrbitControlsImpl | null> }) {
+  const targetY = configuration.height / 200;
+  const modelSize = Math.max(configuration.width, configuration.length, configuration.height) / 100;
   return <>
     <color attach="background" args={["#eeeae4"]} />
     <ambientLight intensity={1.4} />
     <directionalLight castShadow position={[3, 5, 4]} intensity={2.1} shadow-mapSize={[2048, 2048]} />
     <directionalLight position={[-3, 2, -2]} intensity={0.7} color="#fff4e5" />
     <Environment preset="studio" />
-    <Bounds fit clip observe margin={1.25}>
-      <Suspense fallback={null}>
+    <Suspense fallback={null}>
+      <group position={[0, -targetY, 0]}>
         <FurnitureShape product={product} configuration={configuration} />
-      </Suspense>
-    </Bounds>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 0]} receiveShadow>
+      </group>
+    </Suspense>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -targetY - 0.02, 0]} receiveShadow>
       <circleGeometry args={[12, 64]} />
       <meshStandardMaterial color="#d5cec4" roughness={1} />
     </mesh>
-    <ContactShadows position={[0, 0, 0]} opacity={0.32} scale={8} blur={2.5} far={8} />
-    <OrbitControls ref={controlsRef} enablePan={false} minDistance={1.1} maxDistance={16} minPolarAngle={0.3} maxPolarAngle={Math.PI - 0.3} makeDefault />
+    <ContactShadows position={[0, -targetY, 0]} opacity={0.32} scale={8} blur={2.5} far={8} />
+    <OrbitControls ref={controlsRef} enablePan={false} minDistance={Math.max(0.5, modelSize * 0.65)} maxDistance={Math.max(16, modelSize * 8)} minPolarAngle={0.3} maxPolarAngle={Math.PI - 0.3} makeDefault />
   </>;
 }
 
 export function FurnitureViewer({ product, configuration }: { product: FurnitureProductSource; configuration: FurnitureConfiguration }) {
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
+  const modelSize = Math.max(configuration.width, configuration.length, configuration.height) / 100;
+  const cameraPosition: [number, number, number] = [0, 0, modelSize * 8];
   return <div className="furniture-3d-viewer" aria-label={`Interactive 3D preview of ${product.name}`}>
-    <Canvas shadows="percentage" fallback={<div className="viewer-unavailable">Interactive preview unavailable in this browser.</div>} dpr={[1, 1.75]} camera={{ position: [4, 3, 5], fov: 34 }} gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.08 }}>
+    <Canvas shadows="percentage" fallback={<div className="viewer-unavailable">Interactive preview unavailable in this browser.</div>} dpr={[1, 1.75]} camera={{ position: cameraPosition, fov: 34 }} gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.08 }}>
       <ViewerScene product={product} configuration={configuration} controlsRef={controlsRef} />
     </Canvas>
     <div className="viewer-status"><span>INTERACTIVE 3D PREVIEW</span><small>{product.name.toUpperCase()}</small></div>
