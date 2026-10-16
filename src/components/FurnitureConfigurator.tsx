@@ -163,8 +163,10 @@ export function FurnitureConfigurator({ product }: { product: CatalogProduct }) 
   return <PageFrame>
     <section className="furniture-configurator">
       <header className="configurator-heading">
-        <Link className="configurator-back" href={`/shop/${product.id}`}>← Back to {product.name}</Link>
-        <Link className="configurator-change-piece" href="/customize">Choose another piece</Link>
+        <div className="configurator-navigation">
+          <Link className="configurator-back" href={`/shop/${product.id}`}>← Back to product</Link>
+          <Link className="configurator-change-piece" href="/customize">Choose another piece</Link>
+        </div>
         <small>MADE FOR YOUR SPACE / {product.category.toUpperCase()}</small>
         <h1>Make it <em>yours.</em></h1>
         <p>{product.name}</p>

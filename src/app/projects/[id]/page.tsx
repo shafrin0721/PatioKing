@@ -9,8 +9,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   if (!project) notFound();
 
   return <PageFrame><section className="project-detail-page">
-    <Link className="back-link back-icon-only project-back-link" href="/projects" aria-label="Back to projects" title="Back to projects">
+    <Link className="back-link project-back-link" href="/projects">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m7 7-7-7 7-7" /></svg>
+      Back to projects
     </Link>
     <div className="project-detail-hero">
       <img src={projectImagePath(project.image)} alt={project.name} />

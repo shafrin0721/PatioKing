@@ -114,8 +114,10 @@
 .color-options button i.natural-wood { background:#a2783e; }
 .furniture-configurator { min-height:100vh; padding:38px 32px 100px; color:#211d18; background:#f5f3ef; }
 .configurator-heading { max-width:1240px; margin:0 auto 28px; }
-.configurator-back { display:inline-block; margin-bottom:24px; color:#74695f; font:10px var(--mono); text-transform:uppercase; }
-.configurator-change-piece { float:right; margin:0 0 24px 18px; border-bottom:1px solid #a2783e; padding-bottom:4px; color:#62574e; font:9px var(--mono); text-transform:uppercase; }
+.configurator-navigation { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; }
+.configurator-back { display:inline-flex; align-items:center; gap:8px; color:#74695f; font:10px var(--mono); text-transform:uppercase; }
+.configurator-change-piece { border-bottom:1px solid #a2783e; padding-bottom:4px; color:#62574e; font:9px var(--mono); text-transform:uppercase; }
+.configurator-back:focus-visible,.configurator-change-piece:focus-visible { outline:2px solid #a2783e; outline-offset:4px; }
 .configurator-heading > small,.configurator-panel > small,.configurator-summary > div:first-child > small { color:#a2783e; font:9px var(--mono); letter-spacing:.16em; }
 .configurator-heading h1 { margin:13px 0 6px; color:#211d18; font:400 52px/.98 var(--serif); }
 .configurator-heading h1 em { color:#a2783e; }

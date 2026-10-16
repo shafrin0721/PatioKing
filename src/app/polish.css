@@ -1318,6 +1318,54 @@ body .reference-grid .catalog-inquiry-link .catalog-inquiry-arrow { display:inli
   display: block;
 }
 
+.reference-site .contact-details {
+  display: block;
+  padding: 0 clamp(20px, 4vw, 48px);
+  background: #fff;
+}
+
+.reference-site .contact-details > .contact-details-inner {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.reference-site .contact-details > .contact-details-inner > a {
+  min-width: 0;
+}
+
+.product-back-link,
+.project-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #74695f;
+  font: 10px var(--mono);
+  text-transform: uppercase;
+}
+
+.product-back-link {
+  margin-bottom: 25px;
+}
+
+.product-back-link svg,
+.project-back-link svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.product-back-link:focus-visible,
+.project-back-link:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 4px;
+}
+
 .contact-appointment-link {
   display: inline-flex;
   align-items: center;
@@ -1327,6 +1375,28 @@ body .reference-grid .catalog-inquiry-link .catalog-inquiry-arrow { display:inli
   border-bottom: 1px solid currentColor;
   color: #fff;
   font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .reference-site .contact-details {
+    padding-inline: 20px;
+  }
+
+  .reference-site .contact-details > .contact-details-inner {
+    grid-template-columns: 1fr;
+    padding: 0;
+    border: 0;
+  }
+
+  .reference-site .contact-details > .contact-details-inner > a {
+    padding: 28px 22px;
+    border-right: 0;
+    border-bottom: 1px solid #e7ded4;
+  }
+
+  .reference-site .contact-details > .contact-details-inner > a:last-child {
+    border-bottom: 0;
+  }
 }
 
 .projects-grid {
