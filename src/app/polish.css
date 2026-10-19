@@ -576,7 +576,7 @@
 .reference-site .contact-hero {
   width: calc(100% - 48px);
   max-width: 1180px;
-  margin: 25px auto 0;
+  margin: 0 auto;
 }
 
 .reference-site .contact-introduction {

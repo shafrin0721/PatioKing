@@ -181,6 +181,10 @@
   margin-inline: auto;
 }
 
+.reference-site > .inner-hero {
+  margin-top: 0 !important;
+}
+
 .reference-site > .projects-grid,
 .reference-site > .project-detail-page,
 .reference-site > .product-detail-page,
