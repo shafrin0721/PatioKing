@@ -76,8 +76,19 @@ export function ProductShare({ productName }: ProductShareProps) {
   };
 
   const shareToInstagram = async () => {
-    window.open("https://www.instagram.com/patio.king/", "_blank", "noopener,noreferrer");
-    await copyLink("Link copied. Paste it into your Instagram post or message.");
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: productName, text: shareText, url: shareUrl });
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setStatus("Unable to share this product from your device.");
+        return;
+      }
+    }
+
+    const copied = await copyLink("Link copied. Paste it into an Instagram message.");
+    if (copied) window.open("https://www.instagram.com/direct/inbox/", "_blank", "noopener,noreferrer");
   };
 
   const shareFromDevice = async () => {
@@ -96,10 +107,10 @@ export function ProductShare({ productName }: ProductShareProps) {
 
   return <div className="product-share" aria-label="Share this product"><span>Share</span><div className="product-share-actions">
     <a className="share-facebook" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" aria-label={`Share ${productName} on Facebook`} title="Share on Facebook"><FacebookIcon label="Facebook" /></a>
-    <button className="share-instagram" type="button" onClick={shareToInstagram} aria-label={`Share ${productName} on Instagram`} title="Copy the link and open Instagram"><InstagramIcon label="Instagram" /></button>
+    <button className="share-instagram" type="button" onClick={shareToInstagram} aria-label={`Share ${productName} on Instagram`} title="Share using your device, or copy the link for an Instagram message"><InstagramIcon label="Instagram" /></button>
     <a className="share-pinterest" href={`https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&description=${encodeURIComponent(shareText)}`} target="_blank" rel="noopener noreferrer" aria-label={`Share ${productName} on Pinterest`} title="Share on Pinterest"><PinterestIcon label="Pinterest" /></a>
     <a className="share-telegram" href={`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`} target="_blank" rel="noopener noreferrer" aria-label={`Share ${productName} on Telegram`} title="Share on Telegram"><TelegramIcon label="Telegram" /></a>
-    <a className="share-whatsapp" href={`https://wa.me/94773424994?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`} target="_blank" rel="noopener noreferrer" aria-label={`Share ${productName} on WhatsApp`} title="Share on WhatsApp"><WhatsAppIcon label="WhatsApp" /></a>
+    <a className="share-whatsapp" href={`https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`} target="_blank" rel="noopener noreferrer" aria-label={`Share ${productName} on WhatsApp`} title="Choose a WhatsApp contact or group"><WhatsAppIcon label="WhatsApp" /></a>
     <button className="share-native" type="button" onClick={shareFromDevice} aria-label={`Share ${productName}`} title="Share using your device"><ShareIcon label="Share" /></button>
     <button className="share-copy" type="button" onClick={() => copyLink()} aria-label="Copy product link" title="Copy link"><CopyIcon label="Copy link" /></button>
   </div>{status && <small role="status">{status}</small>}</div>;

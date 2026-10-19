@@ -152,6 +152,15 @@
   font-size: 10px;
 }
 
+.home-page .home-custom .home-kicker {
+  color: #f3e8d8;
+}
+
+.home-page .home-custom h2,
+.home-page .home-custom h2 em {
+  color: #fff;
+}
+
 @media (max-width: 900px) {
   .home-page .home-hero {
     min-height: min(700px, calc(100svh - 72px));
