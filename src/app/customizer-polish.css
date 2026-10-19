@@ -115,7 +115,7 @@
 .furniture-configurator { min-height:100vh; padding:38px 32px 100px; color:#211d18; background:#f5f3ef; }
 .configurator-heading { max-width:1240px; margin:0 auto 28px; }
 .configurator-navigation { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; }
-.configurator-back { display:inline-flex; align-items:center; gap:8px; color:#74695f; font:10px var(--mono); text-transform:uppercase; }
+.configurator-back { display:inline-flex; align-items:center; gap:12px; color:#74695f; font:10px var(--mono); text-transform:uppercase; }
 .configurator-change-piece { border-bottom:1px solid #a2783e; padding-bottom:4px; color:#62574e; font:9px var(--mono); text-transform:uppercase; }
 .configurator-back:focus-visible,.configurator-change-piece:focus-visible { outline:2px solid #a2783e; outline-offset:4px; }
 .configurator-heading > small,.configurator-panel > small,.configurator-summary > div:first-child > small { color:#a2783e; font:9px var(--mono); letter-spacing:.16em; }

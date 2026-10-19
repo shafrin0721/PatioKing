@@ -164,7 +164,7 @@ export function FurnitureConfigurator({ product }: { product: CatalogProduct }) 
     <section className="furniture-configurator">
       <header className="configurator-heading">
         <div className="configurator-navigation">
-          <Link className="configurator-back" href={`/shop/${product.id}`}>← Back to product</Link>
+          <Link className="configurator-back" href={`/shop/${product.id}`}><span className="back-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 12H5m7 7-7-7 7-7" /></svg></span>Back to product</Link>
           <Link className="configurator-change-piece" href="/customize">Choose another piece</Link>
         </div>
         <small>MADE FOR YOUR SPACE / {product.category.toUpperCase()}</small>
