@@ -267,4 +267,49 @@
     padding-top: 0;
     padding-bottom: 0;
   }
+
+  .home-page .home-custom h2 {
+    font-size: clamp(34px, 11.5vw, 46px);
+    line-height: 1.04;
+  }
+
+  .home-page .home-custom .home-copy {
+    max-width: 350px;
+    color: #fff;
+    font-size: 17px;
+    line-height: 1.7;
+    text-shadow: 0 1px 10px rgb(0 0 0 / 65%);
+  }
+
+  .home-page .testimonial-card cite {
+    display: block;
+    max-width: 300px;
+    margin-inline: auto;
+    line-height: 1.8;
+  }
+
+  .home-page .testimonial-controls {
+    gap: clamp(8px, 3vw, 12px);
+  }
+
+  .home-page .testimonial-controls > button:not(.testimonial-pause) {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+  }
+
+  .home-page .testimonial-controls > button:not(.testimonial-pause) svg {
+    display: block;
+    margin: auto;
+  }
+
+  .home-page .testimonial-pause {
+    display: grid;
+    min-width: 54px;
+    height: 44px;
+    place-items: center;
+    padding: 0 6px;
+  }
 }

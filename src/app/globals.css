@@ -410,3 +410,482 @@
     width: calc(100% - var(--site-gutter) - var(--site-gutter));
   }
 }
+
+@media (max-width: 700px) {
+  .shop-category-explorer .category-rail-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+  }
+
+  .shop-category-explorer .category-bubble:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  body .reference-grid .catalog-inquiry-link {
+    gap: 6px;
+    margin-right: 8px;
+    margin-left: 8px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  body .reference-grid .catalog-inquiry-link .catalog-inquiry-label {
+    font-size: 10px;
+  }
+
+  body .reference-grid .catalog-inquiry-link .catalog-inquiry-arrow {
+    font-size: 17px;
+  }
+}
+
+.reference-footer .footer-top > div:first-child p::before,
+.reference-footer .footer-top > div:first-child p::after {
+  font-size: 14px;
+  color: #e0d9d0;
+}
+
+.reference-footer .footer-top > div:not(:first-child) small {
+  font-size: 12px;
+}
+
+.reference-footer .footer-top > div:not(:first-child) p {
+  font-size: 13px;
+  color: #ded8d0;
+}
+
+.reference-footer .footer-link-list a {
+  font-size: 12px;
+  color: #ded8d0;
+}
+
+.about-introduction-copy p,
+.principles-grid p,
+.values-list article p {
+  color: #514941;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.about-introduction-copy > small,
+.about-principles .section-label > small,
+.about-values > div > small {
+  color: #805a2b;
+  font-size: 11px;
+}
+
+.principles-grid b,
+.values-list article > b {
+  color: #8a5e2a;
+}
+
+.about-introduction-copy .dark-button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 12px 18px;
+  font: 11px var(--mono);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  transition: background-color .2s ease, transform .2s ease;
+}
+
+.about-introduction-copy .dark-button:hover {
+  background: #9b6e3c;
+  transform: translateY(-2px);
+}
+
+.about-introduction-copy .dark-button:focus-visible {
+  outline: 2px solid #b28a51;
+  outline-offset: 4px;
+}
+
+.about-introduction-copy .dark-button span {
+  display: inline-flex;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  font-size: 16px;
+  transition: transform .2s ease;
+}
+
+.about-introduction-copy .dark-button:hover span {
+  transform: translateX(3px);
+}
+
+.values-list article {
+  display: grid;
+  grid-template-columns: 45px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e7ded4;
+}
+
+.values-list article > b {
+  color: #b28a51;
+  font: 18px Georgia, serif;
+}
+
+.values-list article h3 {
+  margin: 0 0 6px;
+  color: #211d18;
+  font: 400 22px Georgia, serif;
+}
+
+.values-list article p {
+  display: block;
+  grid-template-columns: none;
+  min-width: 0;
+  margin: 0;
+  border-bottom: 0;
+  color: #514941;
+  line-height: 1.65;
+}
+
+.appointment-hero {
+  width: min(var(--site-content-width), calc(100% - var(--site-gutter) - var(--site-gutter)));
+  margin: 0 auto;
+  padding-top: clamp(72px, 10vw, 120px);
+  padding-bottom: clamp(72px, 10vw, 120px);
+  padding-right: 8%;
+  padding-left: 8%;
+}
+
+.appointment-hero h1 {
+  font-size: clamp(46px, 7vw, 82px);
+  line-height: 1.02;
+}
+
+.appointment-hero h1 em {
+  color: #dfb47c;
+  font-style: italic;
+}
+
+.appointment-hero p {
+  max-width: 500px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.appointment-content {
+  width: calc(100% - var(--site-inline) - var(--site-inline));
+  max-width: 1200px;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: clamp(32px, 7vw, 96px);
+  padding: clamp(64px, 8vw, 100px) 0;
+}
+
+.appointment-content > div,
+.appointment-form {
+  min-width: 0;
+}
+
+.appointment-content h2 {
+  font-size: clamp(36px, 4vw, 48px);
+  line-height: 1.08;
+}
+
+.appointment-content > div > p,
+.appointment-details p {
+  color: #514941;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.appointment-content > div > small {
+  font-size: 11px;
+}
+
+.appointment-details b {
+  color: #211d18;
+}
+
+.appointment-form {
+  gap: 18px;
+  padding: clamp(22px, 4vw, 36px);
+}
+
+.appointment-form label {
+  color: #514941;
+  font-size: 12px;
+}
+
+.appointment-form input,
+.appointment-form select,
+.appointment-form textarea {
+  color: #27221e;
+  font-size: 14px;
+}
+
+.appointment-form .dark-button {
+  gap: 14px;
+  justify-self: stretch;
+  white-space: normal;
+}
+
+.contact-showroom {
+  min-height: 440px;
+}
+
+.contact-showroom-inner {
+  max-width: var(--site-content-width);
+}
+
+.contact-showroom-inner h2 {
+  font-size: clamp(42px, 6vw, 68px);
+  line-height: 1.04;
+  color: #fff;
+}
+
+.contact-showroom-inner h2 em {
+  color: #f3e8d8;
+}
+
+.contact-showroom-inner > small {
+  color: #f3e8d8;
+}
+
+.contact-showroom-inner p {
+  max-width: 440px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.contact-appointment-link {
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 20px;
+  padding: 13px 18px;
+  border: 1px solid #ead9bd;
+  background: #ead9bd;
+  color: #211d18;
+  font: 11px var(--mono);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.contact-appointment-link:hover {
+  transform: translateY(-2px);
+  border-color: #fff;
+  background: #fff;
+}
+
+.contact-appointment-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.contact-appointment-link span {
+  display: inline-block;
+  font-size: 17px;
+  transition: transform .2s ease;
+}
+
+.contact-appointment-link:hover span {
+  transform: translateX(3px);
+}
+
+.product-page-filters {
+  align-items: end;
+  gap: 14px;
+}
+
+.product-page-filters label {
+  flex: 1 1 0;
+  min-width: 0;
+  gap: 8px;
+  color: #514941;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.product-page-filters input,
+.product-page-filters select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 11px 12px;
+  font-size: 12px;
+}
+
+.product-page-filters select {
+  padding-right: 38px;
+  background-position: right 12px center;
+}
+
+.product-page-filters .clear-filters {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 16px;
+  font-size: 10px;
+}
+
+.product-page-filters a.clear-filters {
+  border-color: #776a5d;
+  background: transparent;
+  color: #38312a;
+}
+
+.product-page-filters a.clear-filters:hover {
+  background: #eee8df;
+}
+
+body .reference-grid .catalog-inquiry-link {
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 48px;
+  padding-right: 14px;
+  padding-left: 14px;
+  color: #f1d09a;
+}
+
+body .reference-grid .catalog-inquiry-link .catalog-inquiry-label {
+  color: inherit;
+  font-size: 10px;
+  letter-spacing: .05em;
+}
+
+body .reference-grid .catalog-inquiry-link .catalog-inquiry-arrow {
+  color: #f1d09a;
+}
+
+@media (min-width: 901px) {
+  body .reference-grid .catalog-inquiry-link {
+    height: 56px;
+    min-height: 56px;
+    max-height: 56px;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  body .reference-grid .catalog-inquiry-link .catalog-inquiry-label {
+    font-size: clamp(12px, 1vw, 14px);
+    letter-spacing: .06em;
+  }
+
+  body .reference-grid .catalog-inquiry-link .catalog-inquiry-arrow {
+    font-size: clamp(18px, 1.4vw, 21px);
+  }
+}
+
+@media (max-width: 900px) {
+  .reference-site .contact-introduction {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+    padding: 64px var(--site-inline);
+  }
+
+  .reference-site .contact-introduction > div,
+  .reference-site .contact-introduction form {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .reference-footer .footer-top > div:first-child p::before,
+  .reference-footer .footer-top > div:first-child p::after {
+    font-size: 13px;
+  }
+
+  .reference-footer .footer-top > div:not(:first-child) p,
+  .reference-footer .footer-link-list a {
+    font-size: 12px;
+  }
+
+  .product-page-filters {
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .product-page-filters label {
+    flex: none;
+    font-size: 11px;
+  }
+
+  .product-page-filters input,
+  .product-page-filters select {
+    min-height: 46px;
+    font-size: 13px;
+  }
+
+  .product-page-filters .clear-filters {
+    min-height: 46px;
+    width: 100%;
+    font-size: 11px;
+  }
+
+  .about-introduction-copy p,
+  .principles-grid p,
+  .values-list article p {
+    font-size: 16px;
+  }
+
+  .appointment-hero {
+    width: calc(100% - var(--site-gutter) - var(--site-gutter));
+    margin: 12px auto 0;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .appointment-hero h1 {
+    font-size: clamp(36px, 10vw, 46px);
+    line-height: 1.05;
+  }
+
+  .appointment-hero p {
+    font-size: 16px;
+  }
+
+  .appointment-content {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    padding: 56px var(--site-inline) 64px;
+  }
+
+  .appointment-content h2 {
+    font-size: clamp(34px, 9vw, 40px);
+  }
+
+  .appointment-form {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .appointment-form .form-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact-showroom {
+    min-height: 360px;
+    padding: 56px var(--site-inline);
+  }
+
+  .contact-showroom-inner h2 {
+    font-size: clamp(38px, 10vw, 46px);
+  }
+
+  .contact-showroom-inner p {
+    font-size: 16px;
+  }
+
+  .contact-appointment-link {
+    min-height: 48px;
+    margin-top: 18px;
+  }
+}
