@@ -4,20 +4,32 @@ import { useState } from "react";
 import Link from "next/link";
 import { PageFrame } from "@/components/PatioShell";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
+import { getRequiredFieldError, positionFieldError } from "@/lib/form-validation";
 
 const whatsappNumber = "94773424994";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [pendingMessage, setPendingMessage] = useState<string | null>(null);
+  const [validationMessage, setValidationMessage] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const values = Object.fromEntries(new FormData(event.currentTarget).entries());
+    const form = event.currentTarget;
+    const invalid = getRequiredFieldError(form);
+    if (invalid) {
+      positionFieldError(form, invalid.field);
+      setValidationMessage(invalid.message);
+      invalid.field.focus();
+      return;
+    }
+    setValidationMessage("");
+    const values = Object.fromEntries(new FormData(form).entries());
     const message = [
       "Patio King contact enquiry",
       `Name: ${values.firstName} ${values.lastName}`,
       `Email: ${values.email}`,
+      `Phone: ${values.phone}`,
       `Enquiry: ${values.enquiry}`,
       `Message: ${values.message}`,
     ].join("\n");
@@ -31,7 +43,7 @@ export default function ContactPage() {
     setSent(true);
   };
 
-  return <PageFrame><section className="inner-hero contact-hero"><small>GET IN TOUCH</small><h1>Let&apos;s create something<br /><em>beautiful.</em></h1><p>Have a question, a custom furniture idea or a project in mind? We&apos;d love to hear from you.</p></section><section className="contact-introduction"><div><small>START A CONVERSATION</small><h2>Tell us about<br /><em>your space.</em></h2><p>From a single statement chair to a complete hospitality project, our team can help you find the right pieces, finishes and proportions.</p><div className="contact-note"><b>Our studio hours</b><span>Monday - Sunday | 9:00-17:00<br /></span></div></div><form onSubmit={handleSubmit}>{sent ? <div className="form-success"><strong>Thank you.</strong><p>Your message is on its way. Our team will be in touch shortly.</p><button type="button" className="dark-button" onClick={() => setSent(false)}>Send another message</button></div> : <><div className="form-row"><label>First name<input name="firstName" required placeholder="Your first name" /></label><label>Last name<input name="lastName" required placeholder="Your last name" /></label></div><label>Email address<input name="email" required type="email" placeholder="you@example.com" /></label><label>What can we help with?<select name="enquiry" defaultValue="" required><option value="" disabled>Select an enquiry</option><option>Product enquiry</option><option>Custom furniture</option><option>Interior project</option><option>Trade partnership</option></select></label><label>Tell us a little more<textarea name="message" required placeholder="Tell us about your space, timeline and what you are looking for..." /></label><button className="dark-button" type="submit">Send message <span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7" /></svg></span></button></>}</form></section><section className="contact-details">
+  return <PageFrame><section className="inner-hero contact-hero"><small>GET IN TOUCH</small><h1>Let&apos;s create something<br /><em>beautiful.</em></h1><p>Have a question, a custom furniture idea or a project in mind? We&apos;d love to hear from you.</p></section><section className="contact-introduction"><div><small>START A CONVERSATION</small><h2>Tell us about<br /><em>your space.</em></h2><p>From a single statement chair to a complete hospitality project, our team can help you find the right pieces, finishes and proportions.</p><div className="contact-note"><b>Our studio hours</b><span>Monday - Sunday | 9:00-17:00<br /></span></div></div><form noValidate onSubmit={handleSubmit} onInput={() => setValidationMessage("")}>{sent ? <div className="form-success"><strong>Thank you.</strong><p>Your message is on its way. Our team will be in touch shortly.</p><button type="button" className="dark-button" onClick={() => setSent(false)}>Send another message</button></div> : <>{validationMessage && <p className="form-validation-message" role="alert">{validationMessage}</p>}<div className="form-row"><label>First name<input name="firstName" required placeholder="Your first name" /></label><label>Last name<input name="lastName" required placeholder="Your last name" /></label></div><label>Email address<input name="email" required type="email" placeholder="you@example.com" /></label><label>Contact number<input name="phone" required type="tel" autoComplete="tel" placeholder="+94 77 342 4994" /></label><label>What can we help with?<select name="enquiry" defaultValue="" required><option value="" disabled>Select an enquiry</option><option>Product enquiry</option><option>Custom furniture</option><option>Interior project</option><option>Trade partnership</option></select></label><label>Tell us a little more<textarea name="message" required placeholder="Tell us about your space, timeline and what you are looking for..." /></label><button className="dark-button" type="submit">Send message <span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7" /></svg></span></button></>}</form></section><section className="contact-details">
     <div className="contact-details-inner">
       <a href="tel:+94773424994"><span>01</span><h3>Call us</h3><p>+94 77 342 4994</p><small>Speak with our studio team</small></a>
       <a href="mailto:patiokinginfo@gmail.com"><span>02</span><h3>Email us</h3><p>patiokinginfo@gmail.com</p><small>We reply within one business day</small></a>

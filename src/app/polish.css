@@ -963,6 +963,22 @@
   object-position: left center;
 }
 
+.footer-logo-link {
+  display: block;
+  width: 150px;
+  height: 58px;
+  margin-bottom: 25px;
+}
+
+.footer-logo-link .footer-logo {
+  margin-bottom: 0;
+}
+
+.footer-logo-link:focus-visible {
+  outline: 2px solid #b28a51;
+  outline-offset: 4px;
+}
+
 .category-rail > .category-arrow:focus-visible {
   outline: 2px solid #b28a51;
   outline-offset: 3px;
@@ -1217,9 +1233,11 @@
   position: relative;
   width: min(510px, 100%);
   padding: 42px;
+  border: 1px solid #e5d9ca;
+  border-top: 3px solid #b28a51;
   background: #f8f5ef;
   color: #211d18;
-  box-shadow: 0 24px 70px #00000035;
+  box-shadow: 0 24px 70px #00000040;
 }
 
 .confirmation-close {
@@ -1234,6 +1252,14 @@
   color: #756b61;
   font-size: 15px;
   line-height: 1;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.confirmation-close:hover {
+  border-color: #b28a51;
+  background: #f0e8dc;
+  color: #211d18;
 }
 
 .confirmation-kicker {
@@ -1271,6 +1297,8 @@
   font: 10px var(--mono);
   letter-spacing: .06em;
   text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
 }
 
 .confirmation-cancel {
@@ -1278,10 +1306,20 @@
   color: #211d18;
 }
 
+.confirmation-cancel:hover {
+  border-color: #b28a51;
+  background: #f0e8dc;
+}
+
 .confirmation-confirm {
   flex: 1;
   background: #211d18;
   color: #fff;
+}
+
+.confirmation-confirm:hover {
+  border-color: #9a6a31;
+  background: #9a6a31;
 }
 
 .confirmation-confirm span {
@@ -1292,6 +1330,28 @@
 
 .confirmation-confirm:hover span {
   transform: translateX(3px);
+}
+
+.contact-introduction .form-validation-message,
+.appointment-form .form-validation-message {
+  position: absolute;
+  top: var(--validation-top);
+  left: var(--validation-left);
+  z-index: 1;
+  width: min(var(--validation-width), calc(100% - var(--validation-left)));
+  margin: 0;
+  padding: 5px 8px;
+  border-left: 2px solid #c62828;
+  background: #fff1f0;
+  color: #b42318;
+  font: 10px/1.45 var(--sans);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.contact-introduction form,
+.appointment-form {
+  position: relative;
 }
 
 @media (max-width:700px) {
@@ -1308,7 +1368,7 @@
 
 /* Keep furniture fully visible in product surfaces; zoom is the intentional crop. */
 .reference-product > div { display:grid; place-items:center; background:#f4f1eb; }
-.reference-product img { object-fit:contain; padding:18px; }
+.reference-product img { object-fit:contain; padding:0; }
 .reference-grid { align-items:stretch; }
 .reference-product { display:flex; height:100%; min-width:0; flex-direction:column; }
 .reference-product > a { display:flex; flex:1; min-width:0; flex-direction:column; }

@@ -16,7 +16,7 @@ export function PatioFooter() {
   return <footer className="reference-footer">
     <div className="footer-top">
       <div>
-        <img className="footer-logo" src="/assets/logo.jpeg" alt="Patio King" />
+        <Link className="footer-logo-link" href="/" aria-label="Patio King home"><img className="footer-logo" src="/assets/logo.jpeg" alt="Patio King" /></Link>
         <p>“We Shape Your Home.” Modern furniture<br />solutions for the discerning lifestyle.</p>
         <div className="socials" aria-label="Patio King social links">
           <a href="https://www.instagram.com/patio.king/" target="_blank" rel="noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.3" cy="6.7" r="1" className="social-icon-fill" /></svg></a>

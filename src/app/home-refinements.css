@@ -300,15 +300,16 @@
   }
 
   .home-page .testimonial-controls {
-    gap: clamp(8px, 3vw, 12px);
+    gap: clamp(6px, 2vw, 10px);
+    flex-wrap: wrap;
   }
 
   .home-page .testimonial-controls > button:not(.testimonial-pause) {
     display: grid;
     place-items: center;
-    width: 44px;
-    height: 44px;
-    flex-basis: 44px;
+    width: clamp(38px, 11vw, 44px);
+    height: clamp(38px, 11vw, 44px);
+    flex-basis: clamp(38px, 11vw, 44px);
   }
 
   .home-page .testimonial-controls > button:not(.testimonial-pause) svg {
@@ -318,9 +319,67 @@
 
   .home-page .testimonial-pause {
     display: grid;
-    min-width: 54px;
-    height: 44px;
+    min-width: 48px;
+    height: clamp(38px, 11vw, 44px);
     place-items: center;
-    padding: 0 6px;
+    padding: 0 5px;
+  }
+
+  .home-page .home-testimonials h2 {
+    max-width: 100%;
+    font-size: clamp(30px, 8vw, 40px);
+    line-height: 1.05;
+  }
+}
+
+.home-page .home-values-inline b {
+  font-size: 11px;
+}
+
+.home-page .home-values-inline span {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.home-page .home-experience .home-section-heading,
+.home-page .home-spaces .home-section-heading,
+.home-page .home-projects .home-section-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.home-page .home-experience .home-section-heading > div,
+.home-page .home-spaces .home-section-heading > div,
+.home-page .home-projects .home-section-heading > div {
+  width: 100%;
+  max-width: 760px;
+}
+
+.home-page .home-experience .home-section-heading h2,
+.home-page .home-spaces .home-section-heading h2,
+.home-page .home-projects .home-section-heading h2 {
+  margin-bottom: 14px;
+}
+
+.home-page .home-experience .home-section-heading > div > p:not(.home-kicker),
+.home-page .home-spaces .home-section-heading > div > p:not(.home-kicker),
+.home-page .home-projects .home-section-heading > div > p:not(.home-kicker) {
+  max-width: 680px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.home-page .home-spaces .home-section-heading > div > p:not(.home-kicker) {
+  color: #e6ded4;
+}
+
+@media (max-width: 700px) {
+  .home-page .home-experience .home-section-heading > div > p:not(.home-kicker),
+  .home-page .home-spaces .home-section-heading > div > p:not(.home-kicker),
+  .home-page .home-projects .home-section-heading > div > p:not(.home-kicker) {
+    font-size: 14px;
   }
 }

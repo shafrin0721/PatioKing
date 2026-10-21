@@ -104,6 +104,13 @@ export function CustomizeExperience({ selectedProduct, products, categories, sel
   if (!product) {
     return <PageFrame>
       <section className="customizer-page customizer-empty">
+        {selectedCategory && <Link className="customizer-back-link" href="/customize" aria-label="Back to category selection">
+          <span className="customizer-back-link-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M19 12H5m7 7-7-7 7-7" />
+            </svg>
+          </span>
+        </Link>}
         <small>{selectedCategory ? "CHOOSE A PRODUCT" : "MADE FOR YOUR SPACE"}</small>
         <h1>Customize Your<br /><em>Furniture.</em></h1>
         <p>{selectedCategory ? "Select a product from this category to begin customizing." : "Create a piece that fits your space."}</p>
@@ -112,7 +119,6 @@ export function CustomizeExperience({ selectedProduct, products, categories, sel
           <div className="customizer-grid type-grid">
             {products.map((item) => <Link className="customizer-choice" href={`/customize?category=${encodeURIComponent(selectedCategory)}&productId=${encodeURIComponent(item.id)}`} key={item.id}><img src={item.image} alt={item.name} loading="lazy" /><span>{item.name}</span></Link>)}
           </div>
-          <Link className="customizer-consultation-link" href="/customize">Change category</Link>
         </> : <>
           <h2>Choose a category</h2>
           <div className="customizer-grid type-grid">
