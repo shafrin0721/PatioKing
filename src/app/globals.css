@@ -176,9 +176,10 @@
 
 .reference-site > .inner-hero,
 .reference-site > .contact-hero {
-  width: min(var(--site-content-width), calc(100% - var(--site-gutter) - var(--site-gutter)));
+  width: 100%;
   max-width: none;
-  margin-inline: auto;
+  margin-inline: 0;
+  padding-inline: var(--site-inline);
 }
 
 .reference-site > .inner-hero {
@@ -318,18 +319,23 @@
 
 .customizer-page > .customizer-intro,
 .customizer-page > .customizer-picker,
-.customizer-page > .customizer-layout,
-.customizer-page.customizer-empty {
+.customizer-page > .customizer-layout {
   width: min(var(--site-content-width), 100%);
   max-width: var(--site-content-width);
   margin-inline: auto;
 }
 
 .customizer-page > .customizer-intro,
-.customizer-page > .customizer-picker,
-.customizer-page.customizer-empty {
+.customizer-page > .customizer-picker {
   padding-right: 0;
   padding-left: 0;
+}
+
+.customizer-page.customizer-empty {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: var(--site-inline);
 }
 
 .shop-category-explorer .category-rail,
@@ -380,7 +386,7 @@
   .reference-site > .contact-hero,
   .about-introduction,
   .contact-introduction {
-    width: calc(100% - var(--site-gutter) - var(--site-gutter));
+    width: 100%;
   }
 
   .contact-details > .contact-details-inner {
@@ -546,12 +552,13 @@
 }
 
 .appointment-hero {
-  width: min(var(--site-content-width), calc(100% - var(--site-gutter) - var(--site-gutter)));
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
   padding-top: clamp(72px, 10vw, 120px);
   padding-bottom: clamp(72px, 10vw, 120px);
-  padding-right: 8%;
-  padding-left: 8%;
+  padding-right: var(--site-inline);
+  padding-left: var(--site-inline);
 }
 
 .appointment-hero h1 {
@@ -834,12 +841,13 @@ body .reference-grid .catalog-inquiry-link .catalog-inquiry-arrow {
   }
 
   .appointment-hero {
-    width: calc(100% - var(--site-gutter) - var(--site-gutter));
-    margin: 12px auto 0;
-    padding-top: 64px;
-    padding-bottom: 64px;
-    padding-right: 24px;
-    padding-left: 24px;
+    width: 100%;
+    min-height: 300px;
+    margin: 0;
+    padding-top: 44px;
+    padding-bottom: 44px;
+    padding-right: var(--site-inline);
+    padding-left: var(--site-inline);
   }
 
   .appointment-hero h1 {
@@ -887,5 +895,29 @@ body .reference-grid .catalog-inquiry-link .catalog-inquiry-arrow {
   .contact-appointment-link {
     min-height: 48px;
     margin-top: 18px;
+  }
+}
+
+.reference-header .brand-mark {
+  width: 66px;
+  height: 66px;
+  flex-basis: 66px;
+}
+
+@media (max-width: 700px) {
+  .reference-header .brand-mark {
+    width: 56px;
+    height: 56px;
+    flex-basis: 56px;
+  }
+
+  .reference-site > .about-hero {
+    min-height: 300px;
+    padding-block: 44px;
+  }
+
+  .reference-site > .about-hero h1 {
+    font-size: clamp(32px, 8.4vw, 38px);
+    line-height: 1.02;
   }
 }
