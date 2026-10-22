@@ -2,7 +2,7 @@
 
 import { Component, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { MutableRefObject, ReactNode } from "react";
-import { ContactShadows, Environment, Html, OrbitControls, useGLTF } from "@react-three/drei";
+import { ContactShadows, Html, OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas, useThree } from "@react-three/fiber";
 import type { RootState } from "@react-three/fiber";
 import * as THREE from "three";
@@ -248,6 +248,7 @@ export function ConfiguratorModel({
   const fitDistanceRef = useRef(4);
   const [modelSize, setModelSize] = useState<THREE.Vector3 | null>(null);
   const [rendererReady, setRendererReady] = useState(false);
+  const [contextLost, setContextLost] = useState(false);
   const [loadError, setLoadError] = useState<Error | null>(null);
   const handleBounds = useCallback((size: THREE.Vector3) => setModelSize(size), []);
   const handleError = useCallback((error: Error) => {
@@ -259,11 +260,12 @@ export function ConfiguratorModel({
     canvas.addEventListener("webglcontextlost", (event) => {
       event.preventDefault();
       setRendererReady(false);
+      setContextLost(true);
       const error = new Error("WebGL context was lost while rendering the selected model.");
-      console.error("3D model render error:", { productName, modelPath, error });
-      setLoadError(error);
+      console.error("3D model render error:", error.message, { productName, modelPath });
     });
     canvas.addEventListener("webglcontextrestored", () => {
+      setContextLost(false);
       setLoadError(null);
       setRendererReady(true);
     });
@@ -307,14 +309,13 @@ export function ConfiguratorModel({
     </div>;
   }
 
-  return <div className="configurator-model-viewer" aria-label={`3D preview of ${productName}`} data-model-state={previewReady ? "loaded" : "loading"}>
+  return <div className="configurator-model-viewer" aria-label={`3D preview of ${productName}`} data-model-state={previewReady ? "loaded" : contextLost ? "context-lost" : "loading"}>
     <Canvas fallback={<div className="configurator-webgl-fallback" role="alert">WebGL is unavailable; the exact 3D model cannot be rendered.</div>} onCreated={handleCanvasCreated} shadows="percentage" dpr={[1, 1.75]} camera={{ position: [4, 3, 5], fov: 36 }} gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05 }}>
       <color attach="background" args={["#e7e2da"]} />
       <ambientLight intensity={1.5} />
       <hemisphereLight intensity={0.7} color="#fffaf1" groundColor="#8b8175" />
       <directionalLight castShadow position={[5, 8, 5]} intensity={2} shadow-mapSize={[2048, 2048]} shadow-camera-far={30} />
       <directionalLight position={[-5, 4, -5]} intensity={1} color="#dce8ee" />
-      <Environment preset="studio" />
       <Suspense fallback={<Html center><span className="viewer-loading">Loading 3D preview</span></Html>}>
         <ModelErrorBoundary onError={handleError}>
           <ConfigurableGLB key={modelPath} modelPath={modelPath} configuration={configuration} initialDimensions={initialDimensions} onBounds={handleBounds} onError={handleError} />
@@ -324,7 +325,7 @@ export function ConfiguratorModel({
       <CameraFit size={modelSize} controlsRef={controlsRef} fitDistanceRef={fitDistanceRef} />
       <OrbitControls ref={controlsRef} enableDamping dampingFactor={0.08} enablePan={false} minDistance={0.12} maxDistance={12} minPolarAngle={0.12} maxPolarAngle={Math.PI - 0.12} makeDefault />
     </Canvas>
-    {!previewReady && <div className="configurator-canvas-fallback" role="status">Loading 3D Preview...</div>}
+    {!previewReady && <div className="configurator-canvas-fallback" role="status">{contextLost ? "3D preview paused while graphics recover..." : "Loading 3D Preview..."}</div>}
     <div className="configurator-model-controls" aria-label="3D camera controls">
       <button type="button" onClick={() => setView("front")}>Front</button>
       <button type="button" onClick={() => setView("side")}>Side</button>
